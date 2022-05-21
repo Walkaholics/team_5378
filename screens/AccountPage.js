@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { StyleSheet, View, SafeAreaView, Alert} from "react-native";
 import { Text } from "@rneui/themed"; 
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native";
 import { Button } from "@rneui/base";
 import { signOut, supabase } from '../supabaseClient';
 import { Input } from "@rneui/themed";
