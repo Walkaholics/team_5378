@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 // import formik
@@ -11,25 +11,29 @@ import {
   SubTitle,
   StyledTextInput,
   StyledButton,
-  StyledInputLabel,
   LeftIcon,
   RightIcon,
   ButtonText,
   Colors,
+  TextLink,
+  TextLinkContent,
+  SubTitleView,
 } from '../components/styles';
 
 // import icons
-import { Octicons } from '@expo/vector-icons';
+import { Octicons, Ionicons } from '@expo/vector-icons';
 
 // Colors
-const { grey, lightGrey } = Colors;
+const { grey } = Colors;
 
 const Login = () => {
+  const [hidePassword, setHidePassword] = useState(true);
+
   return (
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <PageTitle>Login into your Account</PageTitle>
+        <PageTitle>Log into your Account</PageTitle>
 
         <Formik
           initialValues={{ email: '', password: '' }}
@@ -42,7 +46,7 @@ const Login = () => {
               <UserTextInput
                 label="Email Address"
                 icon="mail"
-                placeholder="Enter your Email ..."
+                placeholder="Email"
                 placeholderTextColor={grey}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
@@ -53,30 +57,55 @@ const Login = () => {
               <UserTextInput
                 label="Password"
                 icon="lock"
-                placeholder="Enter your Password ..."
+                placeholder="Password"
                 placeholderTextColor={grey}
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
-                secureTextEntry={true}
+                secureTextEntry={hidePassword}
+                isPassword={true}
+                hidePassword={hidePassword}
+                setHidePassword={setHidePassword}
               />
+              <StyledButton onPress={handleSubmit}>
+                <ButtonText>Sign In</ButtonText>
+              </StyledButton>
             </StyledFormArea>
           )}
         </Formik>
-        <SubTitle>Don't have an account? Sign Up</SubTitle>
+        <SubTitleView>
+          <SubTitle>Don't have an account? </SubTitle>
+          <TextLink>
+            <TextLinkContent>Sign up</TextLinkContent>
+          </TextLink>
+        </SubTitleView>
       </InnerContainer>
     </StyledContainer>
   );
 };
 
-const UserTextInput = ({ label, icon, ...props }) => {
+const UserTextInput = ({
+  icon,
+  isPassword,
+  hidePassword,
+  setHidePassword,
+  ...props
+}) => {
   return (
     <View>
       <LeftIcon>
         <Octicons name={icon} size={20} color={grey} />
       </LeftIcon>
-      <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
+      {isPassword && (
+        <RightIcon onPress={() => setHidePassword(!hidePassword)}>
+          <Ionicons
+            name={hidePassword ? 'md-eye-off' : 'md-eye'}
+            size={30}
+            color={grey}
+          />
+        </RightIcon>
+      )}
     </View>
   );
 };
