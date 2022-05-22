@@ -14,6 +14,7 @@ const MainPage = () => {
             <Text>WELCOME</Text>
             <Text>MAIN PAGE</Text>
             <Button color="warning" onPress={() => console.log(getUser())}>Get user</Button>
+            <Button color="warning" onPress={()=> navigation.navigate("AccountPage")}>Go to Accounts Page</Button>
         </SafeAreaView>
     )
 

@@ -15,7 +15,7 @@ const Home = () => {
             PlaceholderContent={<ActivityIndicator />}
             />
             <Text>This is Home</Text>
-            <Button color="warning" onPress={()=> navigation.navigate("SignIn")}>Go Sign in</Button>
+            <Button color="warning" onPress={()=> navigation.navigate("SignIn")}>Sign In</Button>
             <Button color="warning" onPress={()=> navigation.navigate("SignUp")}>Sign Up</Button>
             <Button color="red" onPress={() => console.log(getUser())}>Get user test</Button>
             <Button color="red" onPress={()=> navigation.navigate("AccountPage")}>Go Account Page test</Button>
