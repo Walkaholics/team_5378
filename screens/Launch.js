@@ -19,7 +19,7 @@ const Launch = () => {
       <InnerContainer>
         <PageLogo
           resizeMode="cover"
-          source={require('./../assets/img/logo.png')}
+          source={require('./../assets/img/adaptive-icon.png')}
         />
         <StyledFormArea>
           <StyledButton>

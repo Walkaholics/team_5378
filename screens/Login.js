@@ -6,12 +6,12 @@ import { Formik } from 'formik';
 import {
   StyledContainer,
   InnerContainer,
-  PageTitle,
+  PageTitle1,
   StyledFormArea,
   SubTitle,
-  StyledTextInput,
+  StyledTextInput1,
   StyledButton,
-  LeftIcon,
+  LeftIcon1,
   RightIcon,
   ButtonText,
   Colors,
@@ -33,7 +33,7 @@ const Login = () => {
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <PageTitle>Log into your Account</PageTitle>
+        <PageTitle1>Log into your Account</PageTitle1>
 
         <Formik
           initialValues={{ email: '', password: '' }}
@@ -44,7 +44,6 @@ const Login = () => {
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <StyledFormArea>
               <UserTextInput
-                label="Email Address"
                 icon="mail"
                 placeholder="Email"
                 placeholderTextColor={grey}
@@ -55,7 +54,6 @@ const Login = () => {
               />
 
               <UserTextInput
-                label="Password"
                 icon="lock"
                 placeholder="Password"
                 placeholderTextColor={grey}
@@ -93,10 +91,10 @@ const UserTextInput = ({
 }) => {
   return (
     <View>
-      <LeftIcon>
+      <LeftIcon1>
         <Octicons name={icon} size={20} color={grey} />
-      </LeftIcon>
-      <StyledTextInput {...props} />
+      </LeftIcon1>
+      <StyledTextInput1 {...props} />
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons

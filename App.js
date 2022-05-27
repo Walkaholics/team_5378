@@ -1,10 +1,12 @@
 import React from 'react';
 
-// screens
+// import screens
+import Launch from './screens/Launch';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
-import Launch from './screens/Launch';
+import Userdata from './screens/Userdata';
+import Usergoal from './screens/Usergoal';
 
 export default App = () => {
-  return <Launch />;
+  return <Signup />;
 };

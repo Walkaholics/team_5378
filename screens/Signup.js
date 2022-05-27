@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 // import formik
 import { Formik } from 'formik';
 import {
   StyledContainer,
   InnerContainer,
-  PageTitle,
+  PageTitle1,
   StyledFormArea,
   SubTitle,
-  StyledTextInput,
+  StyledTextInput1,
   StyledButton,
-  LeftIcon,
+  LeftIcon1,
   RightIcon,
   ButtonText,
   Colors,
   TextLink,
   TextLinkContent,
   SubTitleView,
+  ErrorMesssage,
 } from '../components/styles';
 
 // import icons
@@ -27,24 +28,52 @@ import { Octicons, Ionicons } from '@expo/vector-icons';
 const { grey } = Colors;
 
 const Signup = () => {
+  // optional hide-password feature
   const [hidePassword, setHidePassword] = useState(true);
+  // enabling submit button if both validation suceeds
+  let isEnabled;
 
   return (
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <PageTitle>Create your Account</PageTitle>
+        <PageTitle1>Create your Account</PageTitle1>
 
         <Formik
           initialValues={{ email: '', password: '' }}
           onSubmit={(values) => {
             console.log(values);
           }}
+          // validataion:
+          // 1. password length has to >= 6
+          // 2. email address has to be valid
+          validate={(values) => {
+            const errors = {};
+            if (!values.password) {
+              errors.password = 'Required';
+            } else if (values.password.length < 6) {
+              errors.password = 'Must be at least 6 characters';
+            }
+            if (!values.email) {
+              errors.email = 'Required';
+            } else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+            ) {
+              errors.email = 'Invalid email address';
+            }
+            return errors;
+          }}
         >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
             <StyledFormArea>
               <UserTextInput
-                label="Email Address"
                 icon="mail"
                 placeholder="Email"
                 placeholderTextColor={grey}
@@ -53,9 +82,10 @@ const Signup = () => {
                 value={values.email}
                 keyboardType="email-address"
               />
-
+              {touched.email && errors.email ? (
+                <ErrorMesssage>{errors.email}</ErrorMesssage>
+              ) : null}
               <UserTextInput
-                label="Password"
                 icon="lock"
                 placeholder="Password"
                 placeholderTextColor={grey}
@@ -67,7 +97,16 @@ const Signup = () => {
                 hidePassword={hidePassword}
                 setHidePassword={setHidePassword}
               />
-              <StyledButton onPress={handleSubmit}>
+              {touched.password && errors.password ? (
+                <ErrorMesssage>{errors.password}</ErrorMesssage>
+              ) : null}
+              {values.password.length >= 6 &&
+              /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email) ==
+                true
+                ? (isEnabled = true)
+                : (isEnabled = false)}
+
+              <StyledButton disabled={!isEnabled} onPress={handleSubmit}>
                 <ButtonText>Sign Up</ButtonText>
               </StyledButton>
             </StyledFormArea>
@@ -93,10 +132,10 @@ const UserTextInput = ({
 }) => {
   return (
     <View>
-      <LeftIcon>
+      <LeftIcon1>
         <Octicons name={icon} size={20} color={grey} />
-      </LeftIcon>
-      <StyledTextInput {...props} />
+      </LeftIcon1>
+      <StyledTextInput1 {...props} />
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons
