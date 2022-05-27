@@ -62,6 +62,3 @@ Personalized fitness plans, the difficulty level will gradually increase as your
 *July 18 to July 24*: Testing and debugging
 
 **Milestone 3 DDL**: July 25
-
-## User Flow
-
