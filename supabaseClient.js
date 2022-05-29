@@ -10,6 +10,7 @@ const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 //console.log(supabaseUrl);
+
 const signUp = async (email, password) => {
     const { user, session, error } = await supabase.auth.signUp({
         email,
@@ -36,14 +37,13 @@ const signOut = async (email, password) => {
 }
 
 const getUser = async() => {
-  const { user, error } = await supabase.auth.api.getUser(
-    'ACCESS_TOKEN_JWT',
-  )
-  return user;
+  const user = supabase.auth.user()
+  console.log(user);
 }
 
 
 const user = supabase.auth.user()
+
 
 export {
   supabase, 

@@ -1,36 +1,60 @@
 import React from "react";
-import { StyleSheet, View, Text, SafeAreaView, ActivityIndicator, FlatList, Image} from "react-native";
+import { StyleSheet, View, Text, SafeAreaView, ActivityIndicator, FlatList, Image, Pressable} from "react-native";
 import { useNavigation } from "@react-navigation/native"
-import { Button } from "@rneui/base";
 import { getUser, supabase } from '../supabaseClient';
+import {
+  InnerContainer,
+  PageLogo,
+  StyledContainer,
+  SubTitleView,
+  SubTitle,
+  TextLink,
+  TextLinkContent,
+  StyledButton,
+  ButtonText,
+  StyledFormArea,
+} from '../components/styles';
 
 const Home = () => {
     const navigation = useNavigation();
+    
+    // For getting information from supabase session
+    async function getUser() {
+      const user = supabase.auth.user()
+      console.log(user);
+    }
+
+    async function getSessionData() {
+      const session = supabase.auth.session();
+      console.log(session);
+    }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <Image
-            source={ require("../assets/favicon.png")}
-            containerStyle={styles.item}
-            PlaceholderContent={<ActivityIndicator />}
-            />
-            <Text>This is Home</Text>
-            <Button color="warning" onPress={()=> navigation.navigate("SignIn")}>Sign In</Button>
-            <Button color="warning" onPress={()=> navigation.navigate("SignUp")}>Sign Up</Button>
-            <Button color="red" onPress={() => console.log(getUser())}>Get user test</Button>
+        <StyledContainer>
+        <InnerContainer>
+          <PageLogo
+            resizeMode="cover"
+            source={require('./../assets/img/adaptive-icon.png')}
+          />
+          <StyledFormArea>
+            <StyledButton onPress={()=> navigation.navigate("SignIn")}>
+              <ButtonText>Sign In</ButtonText>
+            </StyledButton>
+            {/*
+            <Button color="red" onPress={() => getSessionData()}>Get data</Button>
             <Button color="red" onPress={()=> navigation.navigate("AccountPage")}>Go Account Page test</Button>
-        </SafeAreaView>
+            */}
+          </StyledFormArea>
+          <SubTitleView>
+            <SubTitle>Don't have an account? </SubTitle>
+            <TextLink onPress={() => navigation.navigate("SignUp")}>
+                <TextLinkContent>Sign up</TextLinkContent>
+            </TextLink>
+          </SubTitleView>
+        </InnerContainer>
+      </StyledContainer>
     )
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
 
 export default Home;

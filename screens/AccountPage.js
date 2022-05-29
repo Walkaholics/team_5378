@@ -10,28 +10,28 @@ import { Input } from "@rneui/themed";
 const AccountPage = () => {
     const navigation = useNavigation();
 
-    const [loading, setLoading] = useState(false)
-    //const [password, setPassword] = useState('');
-    //const [email, setEmail] = useState('');
-
+    // Sign user out of Supabase
     async function doSignOut() {
       const { error } = await signOut();
       if (error) {
-        
-        Alert.alert("Error Signing Up", error.message, [
+        Alert.alert("Error Signing Out", error.message, [
           { text: "OK", onPress: () => null },
         ]);
-      //console.log("Error");
       } else {
         navigation.navigate("Home");
       }
+    }
 
+    async function getSessionData() {
+      const session = supabase.auth.session();
+        console.log(session);
     }
 
 
     return (
         <SafeAreaView style={styles.container}>
             <Text>Account Details</Text>
+            <Button color="warning" onPress={() => getSessionData()}>get data</Button>
             <Button color="warning" onPress={() => doSignOut()}>Sign Out</Button>
         </SafeAreaView>
     )

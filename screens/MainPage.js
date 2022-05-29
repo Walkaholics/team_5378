@@ -3,7 +3,18 @@ import { StyleSheet, View, Text, SafeAreaView} from "react-native";
 import { useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base";
 import { getUser, supabase } from '../supabaseClient';
-
+import {
+  InnerContainer,
+  PageLogo,
+  StyledContainer,
+  SubTitleView,
+  SubTitle,
+  TextLink,
+  TextLinkContent,
+  StyledButton,
+  ButtonText,
+  StyledFormArea,
+} from '../components/styles';
 
 const MainPage = () => {
     const navigation = useNavigation();

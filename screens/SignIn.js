@@ -4,7 +4,7 @@ import { Text } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/base";
 import { signIn, supabase } from '../supabaseClient';
-import { Input } from "@rneui/themed";
+
 
 import { StatusBar } from 'expo-status-bar';
 // import formik
@@ -12,33 +12,32 @@ import { Formik } from 'formik';
 import {
   StyledContainer,
   InnerContainer,
-  PageTitle,
+  PageTitle1,
   StyledFormArea,
   SubTitle,
-  StyledTextInput,
+  StyledTextInput1,
   StyledButton,
-  StyledInputLabel,
-  LeftIcon,
+  LeftIcon1,
   RightIcon,
   ButtonText,
   Colors,
+  TextLink,
+  TextLinkContent,
+  SubTitleView,
 } from '../components/styles';
 // import icons
-import { Octicons } from '@expo/vector-icons';
-import { useFormik } from "formik";
+import { Octicons, Ionicons } from '@expo/vector-icons';
+
 // Colors
 const { grey, lightGrey } = Colors;
 
 const SignIn = () => {
     const navigation = useNavigation();
 
-    const [loading, setLoading] = useState(false)
-
-
+    // Performs Sign In in Supabase
     async function doSignIn(email, password) {
       const { user, session, error } = await signIn(email, password);
       if (error) {
-        
         Alert.alert("Error Signing Up", error.message, [
           { text: "OK", onPress: () => null },
         ]);
@@ -46,88 +45,88 @@ const SignIn = () => {
       } else {
         navigation.navigate("MainPage");
       }
-
     }
 
+    const [hidePassword, setHidePassword] = useState(true);
 
-    return (
-      <StyledContainer>
-      <StatusBar style="dark" />
-      <InnerContainer>
-        <PageTitle>Login into your Account</PageTitle>
+      return (
+        <StyledContainer>
+          <StatusBar style="dark" />
+          <InnerContainer>
+            <PageTitle1>Log into your Account</PageTitle1>
+    
+            <Formik
+              initialValues={{ email: '', password: '' }}
+              onSubmit={(values) => 
+                doSignIn(values.email, values.password)}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values }) => (
+                <StyledFormArea>
+                  <UserTextInput
+                    icon="mail"
+                    placeholder="Email"
+                    placeholderTextColor={grey}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    keyboardType="email-address"
+                  />
+    
+                  <UserTextInput
+                    icon="lock"
+                    placeholder="Password"
+                    placeholderTextColor={grey}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    secureTextEntry={hidePassword}
+                    isPassword={true}
+                    hidePassword={hidePassword}
+                    setHidePassword={setHidePassword}
+                  />
+                  <StyledButton onPress={handleSubmit}>
+                    <ButtonText>Sign In</ButtonText>
+                  </StyledButton>
+                </StyledFormArea>
+              )}
+            </Formik>
+            <SubTitleView>
+              <SubTitle>Don't have an account? </SubTitle>
+              <TextLink onPress={() => navigation.navigate("SignUp")}>
+                <TextLinkContent>Sign up</TextLinkContent>
+              </TextLink>
+            </SubTitleView>
+          </InnerContainer>
+        </StyledContainer>
+      );
+};
 
-        <Formik
-          //innerRef={ref}
-          initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => doSignIn(values.email, values.password)}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <StyledFormArea>
-              <UserTextInput
-                label="Email Address"
-                icon="mail"
-                placeholder="Enter your Email ..."
-                placeholderTextColor={grey}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType="email-address"
-              />
 
-              <UserTextInput
-                label="Password"
-                icon="lock"
-                placeholder="Enter your Password ..."
-                placeholderTextColor={grey}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                value={values.password}
-                secureTextEntry={true}
-              />
-
-              <StyledButton onPress={handleSubmit}>
-                <ButtonText>
-                  Log In
-                </ButtonText>
-              </StyledButton>
-
-            </StyledFormArea>
-          )}
-          
-        </Formik>
-
-        <SubTitle>Don't have an account? 
-          <Pressable onPress={() => navigation.navigate("SignUp")}> 
-            <Text> Sign Up </Text>
-          </Pressable>
-
-        </SubTitle>
-      </InnerContainer>
-    </StyledContainer>
-    )
-
-}
-
-const UserTextInput = ({ label, icon, ...props }) => {
+const UserTextInput = ({
+  icon,
+  isPassword,
+  hidePassword,
+  setHidePassword,
+  ...props
+}) => {
   return (
     <View>
-      <LeftIcon>
+      <LeftIcon1>
         <Octicons name={icon} size={20} color={grey} />
-      </LeftIcon>
-      <StyledInputLabel>{label}</StyledInputLabel>
-      <StyledTextInput {...props} />
+      </LeftIcon1>
+      <StyledTextInput1 {...props} />
+      {isPassword && (
+        <RightIcon onPress={() => setHidePassword(!hidePassword)}>
+          <Ionicons
+            name={hidePassword ? 'md-eye-off' : 'md-eye'}
+            size={30}
+            color={grey}
+          />
+        </RightIcon>
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
 
   
 
