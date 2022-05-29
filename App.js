@@ -8,5 +8,5 @@ import Userdata from './screens/Userdata';
 import Usergoal from './screens/Usergoal';
 
 export default App = () => {
-  return <Signup />;
+  return <Userdata />;
 };

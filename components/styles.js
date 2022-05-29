@@ -123,6 +123,7 @@ export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 16px;
   font-weight: bold;
+  font-family: 'Georgia';
 `;
 
 export const SubTitle = styled.Text`
@@ -166,5 +167,27 @@ export const ErrorMesssage = styled.Text`
   left: 10px;
   font-size: 14px;
   margin-bottom: 5px;
+  font-family: 'Georgia';
+`;
+
+// goal-selection button on Usergoal screen
+export const GoalSelectionArea = styled.View`
+  width: 90%;
+`;
+
+export const GoalSelection = styled.TouchableOpacity`
+  padding: 20px;
+  background-color: ${secondary};
+  justify-content: center;
+  margin-top: 15px;
+  border-radius: 20px;
+  margin-vertical: 5px;
+  height: 80px;
+  align-items: left;
+`;
+
+export const GoalSelectionText = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
   font-family: 'Georgia';
 `;
