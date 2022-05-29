@@ -36,8 +36,8 @@ If possible, add some other features:
  3. Expo CLI
  4. HTML/CSS/Javascript
 ## Our strengths compared to other similar apps:
-No ads, completely free for all features, including customized plans for fitness and diet
-Personalized fitness plans, the difficulty level will gradually increase as your body data shows your improvement - beginner-friendly
+- No ads, completely free for all features, including customized plans for fitness and diet
+- Personalized fitness plans, the difficulty level will gradually increase as your body data shows your improvement - beginner-friendly
 ## Development Plan
 *May 9 to May 15*: Complete Mockup, poster, and video
 
