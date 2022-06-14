@@ -39,6 +39,11 @@ export const StyledFormArea = styled.View`
   width: 90%;
 `;
 
+export const StyledGoalArea = styled.View`
+  width: 90%;
+  align-items: center;
+`;
+
 // features in launch, login and signup pages
 export const PageTitle1 = styled.Text`
   font-size: 40px;
@@ -172,15 +177,18 @@ export const ErrorMesssage = styled.Text`
 
 // goal-selection button on Usergoal screen
 export const GoalSelectionArea = styled.View`
-  width: 90%;
+  flex: 1;
+  width: 100%;
 `;
 
 export const GoalSelection = styled.TouchableOpacity`
   padding: 20px;
-  background-color: ${secondary};
+  background-color: ${primary};
   justify-content: center;
   margin-top: 15px;
   border-radius: 20px;
+  border-color: ${lightGrey};
+  border-width: 3px;
   margin-vertical: 5px;
   height: 80px;
   align-items: left;
@@ -190,4 +198,11 @@ export const GoalSelectionText = styled.Text`
   font-size: 20px;
   font-weight: bold;
   font-family: 'Georgia';
+`;
+
+export const CheckLogo = styled.Image`
+  width: 40px;
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 250px;
 `;
