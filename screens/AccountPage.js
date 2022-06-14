@@ -6,7 +6,7 @@ import { Button } from "@rneui/base";
 import { signOut, supabase } from '../supabaseClient';
 import { Input } from "@rneui/themed";
 
-
+//Test
 const AccountPage = () => {
     const navigation = useNavigation();
 
