@@ -174,35 +174,3 @@ export const ErrorMesssage = styled.Text`
   margin-bottom: 5px;
   font-family: 'Georgia';
 `;
-
-// goal-selection button on Usergoal screen
-export const GoalSelectionArea = styled.View`
-  flex: 1;
-  width: 100%;
-`;
-
-export const GoalSelection = styled.TouchableOpacity`
-  padding: 20px;
-  background-color: ${primary};
-  justify-content: center;
-  margin-top: 15px;
-  border-radius: 20px;
-  border-color: ${lightGrey};
-  border-width: 3px;
-  margin-vertical: 5px;
-  height: 80px;
-  align-items: left;
-`;
-
-export const GoalSelectionText = styled.Text`
-  font-size: 20px;
-  font-weight: bold;
-  font-family: 'Georgia';
-`;
-
-export const CheckLogo = styled.Image`
-  width: 40px;
-  height: 40px;
-  margin-top: 10px;
-  margin-left: 250px;
-`;

@@ -1,38 +1,40 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  FlatList,
+  Button,
+} from 'react-native';
+// import simpleSelectButton Package
+import SimpleSelectButton from 'react-native-simple-select-button';
 import { StatusBar } from 'expo-status-bar';
-// import dropdown component
-import { Dropdown } from 'react-native-element-dropdown';
 import {
   StyledContainer,
   InnerContainer,
   PageTitle2,
   StyledFormArea,
-  StyledGoalArea,
   StyledTextInput2,
   StyledButton,
   ButtonText,
   Colors,
   ExitView,
 } from '../components/styles';
-// import icon
+// import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
-
 import styledComponents from 'styled-components';
 
 // Colors
-const { tertiary, black } = Colors;
+const { lightGrey, black, secondary, primary } = Colors;
 
-//dropdown data
-// fitness goals
-const goal = [
-  { label: 'Lose Weight', value: 'lose-weight' },
-  { label: 'Build Muscles', value: 'build-muscles' },
-  { label: 'Get Healthier', value: 'get-healthier' },
-];
 const Usergoal = () => {
-  const [value, setValue] = useState(null);
-
+  const [goal, setGoal] = useState('');
+  const button_list = [
+    { label: 'Lose Weight', value: 'lose-weight' },
+    { label: 'Build Muscles', value: 'build-muscles' },
+    { label: 'Become Healthier', value: 'become-healthier' },
+  ];
   return (
     <StyledContainer>
       <StatusBar style="dark" />
@@ -40,76 +42,52 @@ const Usergoal = () => {
         <ExitView>
           <Octicons name={'arrow-left'} size={30} color={black} />
         </ExitView>
-        <PageTitle2>Pick One Goal To Get Started</PageTitle2>
-        <StyledGoalArea>
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={goal}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder="Select..."
-            value={value}
-            searchPlaceholder="Search..."
-            onChange={(item) => {
-              setValue(item.value);
-              // console.log(value);
-            }}
-            renderLeftIcon={() => (
-              <Ionicons
-                style={styles.icon}
-                name={'checkbox-outline'}
-                size={25}
-                color={black}
+        <PageTitle2>What is Your Goal?</PageTitle2>
+        <View
+          style={{
+            marginTop: 35,
+            width: Dimensions.get('screen').width - 65,
+          }}
+        >
+          <FlatList
+            data={button_list}
+            keyExtractor={(item) => item.value}
+            extraData={goal}
+            renderItem={({ item }) => (
+              <SimpleSelectButton
+                style={styles.goals}
+                onPress={() => {
+                  setGoal(item.value);
+                  // console.log(goal);
+                }}
+                isChecked={goal === item.value}
+                text={item.label}
+                textSize={20}
+                iconName="checkcircleo"
+                iconColor="#fff"
+                iconSize={25}
+                buttonDefaultColor="#e5e5e5"
+                buttonSelectedColor="#ff9c5b"
+                textDefaultColor="#333"
+                textSelectedColor="#fff"
               />
             )}
           />
-        </StyledGoalArea>
-        <StyledFormArea>
-          <StyledButton>
+          <StyledButton onPress={console.log(goal)}>
             <ButtonText>Next</ButtonText>
           </StyledButton>
-        </StyledFormArea>
+        </View>
       </InnerContainer>
     </StyledContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  dropdown: {
-    marginBottom: 100,
-    marginTop: 80,
-    padding: 25,
-    height: 200,
-    width: 350,
-    borderColor: tertiary,
-    borderWidth: 5,
-    borderRadius: 8,
-  },
-  icon: {
-    marginRight: 18,
-  },
-  placeholderStyle: {
-    fontSize: 35,
-    fontFamily: 'Georgia',
-  },
-  selectedTextStyle: {
-    height: 40,
-    fontSize: 35,
-    fontFamily: 'Georgia',
-  },
-  iconStyle: {
-    width: 25,
-    height: 25,
-  },
-  inputSearchStyle: {
-    height: 80,
-    fontSize: 35,
+  goals: {
+    padding: 10,
+    borderRadius: 15,
+    marginVertical: 20,
   },
 });
+
 export default Usergoal;
