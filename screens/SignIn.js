@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import { React, useState } from 'react';
+import { StyleSheet, View, SafeAreaView, Alert, Pressable } from 'react-native';
+import { Text } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/base';
+import { signIn, supabase } from '../supabaseClient';
+
 import { StatusBar } from 'expo-status-bar';
 // import formik
 import { Formik } from 'formik';
@@ -19,14 +24,28 @@ import {
   TextLinkContent,
   SubTitleView,
 } from '../components/styles';
-
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
 
 // Colors
-const { grey } = Colors;
+const { grey, lightGrey } = Colors;
 
-const Login = () => {
+const SignIn = () => {
+  const navigation = useNavigation();
+
+  // Performs Sign In in Supabase
+  async function doSignIn(email, password) {
+    const { user, session, error } = await signIn(email, password);
+    if (error) {
+      Alert.alert('Error Signing Up', error.message, [
+        { text: 'OK', onPress: () => null },
+      ]);
+      //console.log("Error");
+    } else {
+      navigation.navigate('UserData');
+    }
+  }
+
   const [hidePassword, setHidePassword] = useState(true);
 
   return (
@@ -37,9 +56,7 @@ const Login = () => {
 
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={(values) => doSignIn(values.email, values.password)}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <StyledFormArea>
@@ -73,7 +90,7 @@ const Login = () => {
         </Formik>
         <SubTitleView>
           <SubTitle>Don't have an account? </SubTitle>
-          <TextLink>
+          <TextLink onPress={() => navigation.navigate('SignUp')}>
             <TextLinkContent>Sign up</TextLinkContent>
           </TextLink>
         </SubTitleView>
@@ -107,4 +124,5 @@ const UserTextInput = ({
     </View>
   );
 };
-export default Login;
+
+export default SignIn;

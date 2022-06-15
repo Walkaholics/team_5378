@@ -1,12 +1,35 @@
-import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { createClient } from '@supabase/supabase-js';
+import { useState } from 'react';
+import { Button } from '@rneui/base';
+import { Header } from '@rneui/themed';
 
-// import screens
-import Launch from './screens/Launch';
-import Login from './screens/Login';
-import Signup from './screens/Signup';
-import Userdata from './screens/Userdata';
-import Usergoal from './screens/Usergoal';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { supabase } from './supabaseClient';
 
-export default App = () => {
-  return <Usergoal />;
-};
+import { NavigationContainer } from '@react-navigation/native';
+import StackNavigator from './StackNavigator';
+//import 'react-native-url-polyfill/auto'
+//import 'polyfill'
+
+export default function App() {
+  console.log('App executed');
+  const [auth, setAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

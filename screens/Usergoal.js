@@ -10,6 +10,7 @@ import {
 // import simpleSelectButton Package
 import SimpleSelectButton from 'react-native-simple-select-button';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyledContainer,
   InnerContainer,
@@ -35,12 +36,18 @@ const Usergoal = () => {
     { label: 'Build Muscles', value: 'build-muscles' },
     { label: 'Become Healthier', value: 'become-healthier' },
   ];
+  const navigation = useNavigation();
   return (
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
         <ExitView>
-          <Octicons name={'arrow-left'} size={30} color={black} />
+          <Octicons
+            onPress={() => navigation.navigate('UserData')}
+            name={'arrow-left'}
+            size={30}
+            color={black}
+          />
         </ExitView>
         <PageTitle2>What is Your Goal?</PageTitle2>
         <View
@@ -73,7 +80,7 @@ const Usergoal = () => {
               />
             )}
           />
-          <StyledButton onPress={console.log(goal)}>
+          <StyledButton onPress={() => goal && navigation.navigate('MainPage')}>
             <ButtonText>Next</ButtonText>
           </StyledButton>
         </View>

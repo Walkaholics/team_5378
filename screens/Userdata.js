@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 // import dropdown component
 import { Dropdown } from 'react-native-element-dropdown';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyledContainer,
   InnerContainer,
@@ -71,12 +72,19 @@ const Userdata = () => {
   const [value5, setValue5] = useState(null);
   const [value6, setValue6] = useState(null);
 
+  const navigation = useNavigation();
+
   return (
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
         <ExitView>
-          <Octicons name={'arrow-left'} size={30} color={black} />
+          <Octicons
+            onPress={() => navigation.navigate('SignIn')}
+            name={'arrow-left'}
+            size={30}
+            color={black}
+          />
         </ExitView>
         <PageTitle2>Tell Us About Yourself</PageTitle2>
         <StyledFormArea>
@@ -236,7 +244,17 @@ const Userdata = () => {
               />
             )}
           />
-          <StyledButton>
+          <StyledButton
+            onPress={() =>
+              value1 &&
+              value2 &&
+              value3 &&
+              value4 &&
+              value5 &&
+              value6 &&
+              navigation.navigate('UserGoal')
+            }
+          >
             <ButtonText>Next</ButtonText>
           </StyledButton>
         </StyledFormArea>

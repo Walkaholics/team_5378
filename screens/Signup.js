@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { React, useState, useRef } from 'react';
+import { StyleSheet, View, SafeAreaView, Alert, Pressable } from 'react-native';
+import { Text } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/base';
+import { signIn, signUp, supabase } from '../supabaseClient';
+import { disableExpoCliLogging } from 'expo/build/logs/Logs';
+
 import { StatusBar } from 'expo-status-bar';
 // import formik
 import { Formik } from 'formik';
@@ -20,17 +26,35 @@ import {
   SubTitleView,
   ErrorMesssage,
 } from '../components/styles';
-
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
 
 // Colors
-const { grey } = Colors;
+const { grey, lightGrey } = Colors;
 
-const Signup = () => {
+const SignUp = () => {
+  const navigation = useNavigation();
+
+  // Performs Sign In in Supabase
+  async function doLogin(email, password) {
+    const { user, session, error } = await signUp(email, password);
+    console.log('test');
+    if (error) {
+      console.log('error');
+      Alert.alert('Error Signing Up', error.message, [
+        { text: 'OK', onPress: () => null },
+      ]);
+      //console.log("Error");
+    } else {
+      console.log('pass');
+      navigation.navigate('GettingStarted');
+      //signIn(email, password);
+    }
+  }
+
   // optional hide-password feature
   const [hidePassword, setHidePassword] = useState(true);
-  // enabling submit button if both validation suceeds
+  // enabling SignUp button if both validation suceeds
   let isEnabled;
 
   return (
@@ -41,9 +65,7 @@ const Signup = () => {
 
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={(values) => doLogin(values.email, values.password)}
           // validataion:
           // 1. password length has to >= 6
           // 2. email address has to be valid
@@ -106,15 +128,21 @@ const Signup = () => {
                 ? (isEnabled = true)
                 : (isEnabled = false)}
 
-              <StyledButton disabled={!isEnabled} onPress={handleSubmit}>
+              {/*<StyledButton disabled={!isEnabled} onPress={handleSubmit}>*/}
+              <StyledButton onPress={handleSubmit}>
                 <ButtonText>Sign Up</ButtonText>
               </StyledButton>
+              {/*
+                <StyledButton onPress={() => navigation.navigate("GettingStarted")}>
+                  <ButtonText>BYPASS SIGN UP</ButtonText>
+                </StyledButton>
+                */}
             </StyledFormArea>
           )}
         </Formik>
         <SubTitleView>
           <SubTitle>Already have an account? </SubTitle>
-          <TextLink>
+          <TextLink onPress={() => navigation.navigate('SignIn')}>
             <TextLinkContent>Sign in</TextLinkContent>
           </TextLink>
         </SubTitleView>
@@ -148,4 +176,5 @@ const UserTextInput = ({
     </View>
   );
 };
-export default Signup;
+
+export default SignUp;
