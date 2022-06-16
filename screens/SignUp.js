@@ -40,6 +40,7 @@ const SignUp = () => {
     // Performs Sign In in Supabase
     async function doSignUp(email, password) {
       const { user, session, error } = await signUp(email, password);
+      
       console.log("test")
       if (error) {
         console.log("error")
@@ -50,9 +51,10 @@ const SignUp = () => {
       }
       else {
         console.log("pass Sign Up")
-        navigation.navigate("GettingStarted");
+        navigation.navigate("UserData");
         //signIn(email, password);
       }
+      console.log(supabase.auth.user());
     }
 
 

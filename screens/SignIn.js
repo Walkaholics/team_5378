@@ -59,6 +59,7 @@ const SignIn = () => {
         } else {
           navigation.navigate("Tabs");
         }
+        console.log(supabase.auth.user());
       } finally {
         setLoading(false)
         

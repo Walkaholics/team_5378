@@ -24,17 +24,17 @@ const ReportPage = () => {
       return data[0];
     }
 
-    // Calculate BMI
+    // Calculate BMR
     async function handleBMR() {
       const data = await getHealthData();
       let bmr = 0;
-      if (data.Gender == "Male") {
+      if (data.Gender == "male") {
         console.log("you are male")
         // Formula: 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years)
         bmr = 88.362 + (13.397 * data.Weight) 
         + (4.799 * data.Height) 
         - (5.677 * data.Age)
-      } else if (data.Gender == "Female" ) {
+      } else if (data.Gender == "female" ) {
         bmr = 447.593 + (9.247 * data.Weight) 
         + (3.098 * data.Height) 
         - (4.330 * data.Age)
@@ -47,6 +47,7 @@ const ReportPage = () => {
     }
     handleBMR()
 
+    // Calculate BMI & set BFP
     async function handleBMI() {
       const data = await getHealthData();
       //console.log("went through")

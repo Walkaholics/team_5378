@@ -7,7 +7,8 @@ import SignUp from "./screens/SignUp";
 import MainPage from "./screens/MainPage";
 import { signIn } from "./supabaseClient";
 import SettingsPage from "./screens/SettingsPage";
-import GettingStarted from "./screens/GettingStarted"
+import UserData from "./screens/UserData"
+import UserGoal from "./screens/UserGoal"
 import ReportPage from "./screens/ReportPage"
 import PlansPage from "./screens/PlansPage"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -82,7 +83,8 @@ const StackNavigator = () => {
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="SignIn" component={SignIn} />
                 <Stack.Screen name="SignUp" component={SignUp} />
-                <Stack.Screen name="GettingStarted" component={GettingStarted} />
+                <Stack.Screen name="UserData" component={UserData} />
+                <Stack.Screen name="UserGoal" component={UserGoal} />
                 <Stack.Screen name="Tabs" component={TabNavigator} />
                 {/*
                 <Stack.Screen name="MainPage" component={MainPage} />
