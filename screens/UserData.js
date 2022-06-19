@@ -94,7 +94,8 @@ const UserData = () => {
     })
     */
 
-    // Function to insert into profiles table in Supabase
+
+    // Insert into profiles table in Supabase
     async function doUpdate(values) {
         //console.log(values.gender)
         const { data, error } = await supabase
@@ -108,12 +109,7 @@ const UserData = () => {
             BFP: values.bodyFatPercentage,
             Sleep: values.sleepTime
           }
-          /*
-          { id: supabase.auth.user().id,
-            Age: values.age}
-          */
         )
-        
       
       if (error) {
         Alert.alert("Error Updating", error.message, [

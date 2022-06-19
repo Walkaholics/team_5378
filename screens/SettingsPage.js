@@ -31,7 +31,8 @@ const SettingsPage = () => {
         <SafeAreaView style={styles.container}>
             <Text>Account Details</Text>
             <Button color="red" onPress={() => getSessionData()}>get data</Button>
-            <Button color="warning" onPress={() => navigation.navigate("GettingStarted")}>Update Profile</Button>
+            <Button color="red" onPress={() => navigation.navigate("UserGoal")}>user goal</Button>
+            <Button color="warning" onPress={() => navigation.navigate("UserData")}>Update Profile</Button>
             <Button color="warning" onPress={() => doSignOut()}>Sign Out</Button>
             
             {/*<Button color="warning" onPress={() => navigation.navigate("MainPage")}>Main</Button>

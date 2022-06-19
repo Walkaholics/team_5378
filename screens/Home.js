@@ -18,12 +18,7 @@ import {
 const Home = () => {
     const navigation = useNavigation();
     
-    // For getting information from supabase session
-    async function getUser() {
-      const user = supabase.auth.user()
-      console.log(user);
-    }
-
+    // Test to see if there is currently a Supabase session(logged in)
     async function getSessionData() {
       const session = supabase.auth.session();
       console.log(session);
@@ -41,10 +36,7 @@ const Home = () => {
               <ButtonText>Sign In</ButtonText>
             </StyledButton>
             
-            <Button color="red" title="Get data" onPress={() => getSessionData()}></Button>
-            <Button color="red" title="Get user" onPress={() => console.log(supabase.auth.user()?.id)}></Button>
-            <Button color="red" title="Go Main Page test" onPress={()=> navigation.navigate("Tabs")}></Button>
-            
+            <Button color="red" title="Get data" onPress={() => getSessionData()}></Button>            
           </StyledFormArea>
           <SubTitleView>
             <SubTitle>Don't have an account? </SubTitle>

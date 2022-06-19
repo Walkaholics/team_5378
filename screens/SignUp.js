@@ -37,7 +37,7 @@ const { grey, lightGrey } = Colors;
 const SignUp = () => {
     const navigation = useNavigation();
 
-    // Performs Sign In in Supabase
+    // Performs Sign Up in Supabase
     async function doSignUp(email, password) {
       const { user, session, error } = await signUp(email, password);
       

@@ -42,6 +42,7 @@ const UserGoal = () => {
   // Insert User Goal into Profiles Table
   async function doUpdate(usergoal) {
     //console.log(values.gender)
+    //console.log(usergoal)
     const { data, error } = await supabase
     .from('profiles')
     .upsert( 
@@ -55,6 +56,30 @@ const UserGoal = () => {
     //console.log("Error");
     } else {
       navigation.navigate("Tabs");
+    }
+  }
+
+  // Get Health Data
+  async function getHealthData() {
+    const { data1, error } = await supabase
+    .from('profiles')
+    .select()
+    .eq('id', supabase.auth.user().id)
+    //.then(response => {return response})
+    //console.log(data[0]);
+    return data1[0];
+  }
+
+  // Logic to create plan based on user goal
+  async function createPlan(usergoal) {
+    if (usergoal == "lose-weight") {
+      const { data2, error2 } = await supabase
+      .from('Exercise')
+      .upsert([
+        { id: supabase.auth.user().id, Day: "Monday", Name: "Push Up", Amount: "20 reps"},
+        { id: supabase.auth.user().id, Day: "Monday", Name: "Crunches", Amount: "20 reps"},
+        { id: supabase.auth.user().id , Day: "Tuesday", Name: "Sit Up", Amount: "20 reps" },
+      ])
     }
   }
 
@@ -101,7 +126,7 @@ const UserGoal = () => {
               />
             )}
           />
-          <StyledButton onPress={() => goal && doUpdate(goal)}>
+          <StyledButton onPress={() => goal && doUpdate(goal) && createPlan(goal)}>
             <ButtonText>Next</ButtonText>
           </StyledButton>
         </View>

@@ -19,12 +19,18 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
-const PlansNavigator = () => {
+// Home Page -> Sign Up/In + Getting Started -> Main Page
+const StackNavigator = () => {
     return (
         //<Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Group>
-                <Stack.Screen name="PlansPage" component={PlansPage} />
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="SignIn" component={SignIn} />
+                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="UserData" component={UserData} />
+                <Stack.Screen name="UserGoal" component={UserGoal} />
+                <Stack.Screen name="Tabs" component={TabNavigator} />
                 {/*
                 <Stack.Screen name="MainPage" component={MainPage} />
                 <Stack.Screen name="SettingsPage" component={SettingsPage} />              
@@ -38,6 +44,7 @@ const PlansNavigator = () => {
 
 }
 
+// Tabs of Main, Reports, Plan and Settings Page
 const TabNavigator = () => {
     return (
         //<Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -73,19 +80,13 @@ const TabNavigator = () => {
     )
 }
 
-
-
-const StackNavigator = () => {
+// For additional tabs in Plans Page
+const PlansNavigator = () => {
     return (
         //<Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator>
             <Stack.Group>
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="SignIn" component={SignIn} />
-                <Stack.Screen name="SignUp" component={SignUp} />
-                <Stack.Screen name="UserData" component={UserData} />
-                <Stack.Screen name="UserGoal" component={UserGoal} />
-                <Stack.Screen name="Tabs" component={TabNavigator} />
+                <Stack.Screen name="PlansPage" component={PlansPage} />
                 {/*
                 <Stack.Screen name="MainPage" component={MainPage} />
                 <Stack.Screen name="SettingsPage" component={SettingsPage} />              
