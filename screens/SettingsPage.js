@@ -16,7 +16,7 @@ const SettingsPage = () => {
         { text: 'OK', onPress: () => null },
       ]);
     } else {
-      navigation.navigate('Home');
+      navigation.navigate('Launch');
     }
   }
 

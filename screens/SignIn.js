@@ -32,18 +32,48 @@ const { grey, lightGrey } = Colors;
 
 const SignIn = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
   // Performs Sign In in Supabase
   async function doSignIn(email, password) {
-    const { user, session, error } = await signIn(email, password);
-    if (error) {
-      Alert.alert('Error Signing Up', error.message, [
-        { text: 'OK', onPress: () => null },
-      ]);
-      //console.log("Error");
-    } else {
-      navigation.navigate('UserData');
+    /*
+      const { user, session, error } = await signIn(email, password);
+      if (error) {
+        Alert.alert("Error Signing Up", error.message, [
+          { text: "OK", onPress: () => null },
+        ]);
+      console.log(error);
+      } else {
+        navigation.navigate("Tabs");
+      }
+      */
+    try {
+      setLoading(true);
+      const { user, session, error } = await signIn(email, password);
+      if (error) {
+        Alert.alert('Error Signing Up', error.message, [
+          { text: 'OK', onPress: () => null },
+        ]);
+        console.log(error);
+      } else {
+        navigation.navigate('Tabs');
+      }
+      console.log(supabase.auth.user());
+    } finally {
+      setLoading(false);
     }
+  }
+
+  async function selectTable() {
+    console.log('test');
+
+    /*
+      const { data, error } = await supabase
+      .from('profiles')
+      .select()
+      console.log(data);
+      */
+    navigation.navigate('Tabs');
   }
 
   const [hidePassword, setHidePassword] = useState(true);
@@ -84,6 +114,9 @@ const SignIn = () => {
               />
               <StyledButton onPress={handleSubmit}>
                 <ButtonText>Sign In</ButtonText>
+              </StyledButton>
+              <StyledButton onPress={selectTable}>
+                <ButtonText>Bypass Sign In</ButtonText>
               </StyledButton>
             </StyledFormArea>
           )}

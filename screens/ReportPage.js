@@ -38,13 +38,8 @@ const ReportPage = () => {
   // get User Gender
   async function checkGender() {
     const data = await getHealthData();
-    if (data.Gender == 'male') {
-      setIsMale(true);
-      console.log(isMale);
-    } else {
-      setIsMale(false);
-      console.log(isMale);
-    }
+    data.Gender == 'male' ? setIsMale(true) : setIsMale(false);
+    //console.log(isMale);
   }
 
   // Calculate BMR
@@ -89,7 +84,7 @@ const ReportPage = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <PageTitle2>REPORT PAGE</PageTitle2>
+        <PageTitle2>Your Report</PageTitle2>
         <View style={styles.dataView1}>
           <Text style={styles.data}>Your BMI: </Text>
           <RNSpeedometer
@@ -122,11 +117,16 @@ const ReportPage = () => {
           {isMale ? (
             <RNSpeedometer
               value={parseInt(BFP)}
-              minValue={16.5}
-              maxValue={32.5}
+              minValue={12.5}
+              maxValue={36.5}
               size={200}
               allowedDecimals={0}
               labels={[
+                {
+                  name: 'Healthy ',
+                  labelColor: 'forestgreen',
+                  activeBarColor: 'forestgreen',
+                },
                 {
                   name: 'Healthy',
                   labelColor: 'forestgreen',
@@ -147,16 +147,26 @@ const ReportPage = () => {
                   labelColor: 'orangered',
                   activeBarColor: 'orangered',
                 },
+                {
+                  name: 'Extremely Overweight ',
+                  labelColor: 'orangered',
+                  activeBarColor: 'orangered',
+                },
               ]}
             />
           ) : (
             <RNSpeedometer
               value={parseInt(BFP)}
-              minValue={21.5}
-              maxValue={37.5}
+              minValue={14.5}
+              maxValue={40}
               size={200}
               allowedDecimals={0}
               labels={[
+                {
+                  name: 'Underfat',
+                  labelColor: 'dodgerblue',
+                  activeBarColor: 'dodgerblue',
+                },
                 {
                   name: 'Healthy',
                   labelColor: 'forestgreen',
@@ -203,6 +213,7 @@ const ReportPage = () => {
 const styles = StyleSheet.create({
   scrollView: {
     marginVertical: 10,
+    width: Dimensions.get('screen').width - 65,
   },
   container: {
     flex: 1,

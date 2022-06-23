@@ -8,6 +8,7 @@ import {
   FlatList,
   Image,
   Pressable,
+  Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getUser, supabase } from '../supabaseClient';
@@ -24,15 +25,10 @@ import {
   StyledFormArea,
 } from '../components/styles';
 
-const Home = () => {
+const Launch = () => {
   const navigation = useNavigation();
 
-  // For getting information from supabase session
-  async function getUser() {
-    const user = supabase.auth.user();
-    console.log(user);
-  }
-
+  // Test to see if there is currently a Supabase session(logged in)
   async function getSessionData() {
     const session = supabase.auth.session();
     console.log(session);
@@ -49,10 +45,12 @@ const Home = () => {
           <StyledButton onPress={() => navigation.navigate('SignIn')}>
             <ButtonText>Sign In</ButtonText>
           </StyledButton>
-          {/*
-            <Button color="red" onPress={() => getSessionData()}>Get data</Button>
-            <Button color="red" onPress={()=> navigation.navigate("AccountPage")}>Go Account Page test</Button>
-            */}
+
+          <Button
+            color="red"
+            title="Get data"
+            onPress={() => getSessionData()}
+          ></Button>
         </StyledFormArea>
         <SubTitleView>
           <SubTitle>Don't have an account? </SubTitle>
@@ -65,4 +63,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Launch;

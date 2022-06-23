@@ -18,12 +18,18 @@ import { Octicons, Ionicons } from '@expo/vector-icons';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const PlansNavigator = () => {
+// Home Page -> Sign Up/In + Getting Started -> Main Page
+const StackNavigator = () => {
   return (
     //<Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Group>
-        <Stack.Screen name="PlansPage" component={PlansPage} />
+        <Stack.Screen name="Launch" component={Launch} />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="UserData" component={UserData} />
+        <Stack.Screen name="UserGoal" component={UserGoal} />
+        <Stack.Screen name="Tabs" component={TabNavigator} />
         {/*
                 <Stack.Screen name="MainPage" component={MainPage} />
                 <Stack.Screen name="SettingsPage" component={SettingsPage} />              
@@ -34,6 +40,7 @@ const PlansNavigator = () => {
   );
 };
 
+// Tabs of Main, Reports, Plan and Settings Page
 const TabNavigator = () => {
   return (
     //<Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -47,7 +54,7 @@ const TabNavigator = () => {
       <Tab.Group>
         <Tab.Screen
           name="MainPage"
-          component={MainPage}
+          component={MainNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="home-outline" color={color} size={size} />
@@ -55,8 +62,8 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="ReportPage"
-          component={ReportPage}
+          name="ReportNavigator"
+          component={ReportNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="stats-chart-outline" color={color} size={size} />
@@ -74,7 +81,7 @@ const TabNavigator = () => {
         />
         <Tab.Screen
           name="SettingsPage"
-          component={SettingsPage}
+          component={SettingsNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="cog-outline" color={color} size={size} />
@@ -86,22 +93,51 @@ const TabNavigator = () => {
   );
 };
 
-const StackNavigator = () => {
+// For additional tabs in Plans Page
+const PlansNavigator = () => {
   return (
     //<Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
       <Stack.Group>
-        <Stack.Screen name="Launch" component={Launch} />
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="UserData" component={UserData} />
-        <Stack.Screen name="UserGoal" component={UserGoal} />
-        <Stack.Screen name="Tabs" component={TabNavigator} />
-        <Stack.Screen name="MainPage" component={MainPage} />
+        <Stack.Screen name="Plans Page" component={PlansPage} />
         {/*
+                <Stack.Screen name="MainPage" component={MainPage} />
                 <Stack.Screen name="SettingsPage" component={SettingsPage} />              
                 <Stack.Screen name="ReportPage" component={ReportPage} />
                 */}
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+};
+
+const ReportNavigator = () => {
+  return (
+    //<Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
+      <Stack.Group>
+        <Stack.Screen name="Report Page" component={ReportPage} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+};
+
+const MainNavigator = () => {
+  return (
+    //<Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
+      <Stack.Group>
+        <Stack.Screen name="Home" component={MainPage} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+};
+
+const SettingsNavigator = () => {
+  return (
+    //<Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
+      <Stack.Group>
+        <Stack.Screen name="Settings" component={SettingsPage} />
       </Stack.Group>
     </Stack.Navigator>
   );

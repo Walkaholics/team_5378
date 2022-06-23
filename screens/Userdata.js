@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-// import dropdown component
-import { Dropdown } from 'react-native-element-dropdown';
+import { React, useEffect, useState } from 'react';
+import { StyleSheet, View, SafeAreaView, Alert, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { userData, supabase } from '../supabaseClient';
+import { Dropdown } from 'react-native-element-dropdown';
+
+import { StatusBar } from 'expo-status-bar';
+// import formik
+import { Formik } from 'formik';
 import {
   StyledContainer,
   InnerContainer,
@@ -11,14 +14,13 @@ import {
   StyledFormArea,
   StyledTextInput2,
   StyledButton,
+  LeftIcon2,
   ButtonText,
   Colors,
   ExitView,
 } from '../components/styles';
-// import icon
+// import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
-
-import styledComponents from 'styled-components';
 
 // Colors
 const { grey, lightGrey, black } = Colors;
@@ -27,12 +29,12 @@ const { grey, lightGrey, black } = Colors;
 var minAge = 18,
   minWeight = 30,
   minHeight = 130,
-  minBodyFat = 5,
+  minBodyFat = 15,
   minSleepTime = 1,
   maxAge = 100,
   maxWeight = 250,
   maxHeight = 200,
-  maxBodyFat = 40,
+  maxBodyFat = 36,
   maxSleepTime = 15;
 // age
 const age = [];
@@ -64,7 +66,8 @@ const sleepTime = [];
 for (var i = minSleepTime; i <= maxSleepTime; i++) {
   sleepTime.push({ label: i, value: i });
 }
-const Userdata = () => {
+
+const UserData = () => {
   const [value1, setValue1] = useState(null);
   const [value2, setValue2] = useState(null);
   const [value3, setValue3] = useState(null);
@@ -73,20 +76,51 @@ const Userdata = () => {
   const [value6, setValue6] = useState(null);
 
   const navigation = useNavigation();
+  /*
+    const [auth, setAuth] = useState(true);
+
+    useEffect(() => {
+      setAuth(supabase.auth.session());
+
+      supabase.auth.onAuthStateChange((_event, session) => {
+        console.log(session);
+        setAuth(session);
+      })
+    })
+    */
+
+  // Insert into profiles table in Supabase
+  async function doUpdate(values) {
+    //console.log(values.gender)
+    const { data, error } = await supabase.from('profiles').upsert({
+      id: supabase.auth.user().id,
+      Age: values.age,
+      Gender: values.gender,
+      Weight: values.weight,
+      Height: values.height,
+      BFP: values.bodyFatPercentage,
+      Sleep: values.sleepTime,
+    });
+
+    if (error) {
+      Alert.alert('Error Updating', error.message, [
+        { text: 'OK', onPress: () => null },
+      ]);
+      //console.log("Error");
+    } else {
+      navigation.navigate('UserGoal');
+    }
+  }
 
   return (
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <ExitView>
-          <Octicons
-            onPress={() => navigation.navigate('SignIn')}
-            name={'arrow-left'}
-            size={30}
-            color={black}
-          />
+        <ExitView onPress={() => navigation.navigate('SignUp')}>
+          <Octicons name={'arrow-left'} size={30} color={black} />
         </ExitView>
         <PageTitle2>Tell Us About Yourself</PageTitle2>
+
         <StyledFormArea>
           <Dropdown
             style={styles.dropdown}
@@ -245,15 +279,30 @@ const Userdata = () => {
             )}
           />
           <StyledButton
-            onPress={() =>
+            onPress={() => {
+              {
+                /*
               value1 &&
               value2 &&
               value3 &&
               value4 &&
               value5 &&
               value6 &&
-              navigation.navigate('UserGoal')
-            }
+              */
+              }
+              let test = {
+                age: value1,
+                gender: value2,
+                weight: value3,
+                height: value4,
+                bodyFatPercentage: value5,
+                sleepTime: value6,
+              };
+
+              console.log(test.age);
+              console.log(test);
+              doUpdate(test);
+            }}
           >
             <ButtonText>Next</ButtonText>
           </StyledButton>
@@ -289,4 +338,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-export default Userdata;
+
+export default UserData;

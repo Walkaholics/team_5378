@@ -12,9 +12,19 @@ export const Colors = {
   lightGrey: 'rgb(250,249,249)',
   black: 'rgb(0,0,0)',
   red: 'rgb(250,0,0)',
+  purpleBlue: 'rgb(105,121,249)',
 };
 
-const { primary, secondary, tertiary, grey, lightGrey, black, red } = Colors;
+const {
+  primary,
+  secondary,
+  tertiary,
+  grey,
+  lightGrey,
+  black,
+  red,
+  purpleBlue,
+} = Colors;
 
 export const StyledContainer = styled.View`
   flex: 1;
@@ -37,11 +47,6 @@ export const PageLogo = styled.Image`
 
 export const StyledFormArea = styled.View`
   width: 90%;
-`;
-
-export const StyledGoalArea = styled.View`
-  width: 90%;
-  align-items: center;
 `;
 
 // features in launch, login and signup pages
@@ -128,7 +133,6 @@ export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 16px;
   font-weight: bold;
-  font-family: 'Georgia';
 `;
 
 export const SubTitle = styled.Text`
@@ -172,5 +176,46 @@ export const ErrorMesssage = styled.Text`
   left: 10px;
   font-size: 14px;
   margin-bottom: 5px;
+  font-family: 'Georgia';
+`;
+// styling in PlansPage
+export const PlanView = styled.View`
+  margin-bottom: 5px;
+  align-items: 'center';
+  width: 100%;
+`;
+export const WeeksText = styled.Text`
+  color: ${purpleBlue};
+  font-family: 'Georgia';
+  font-size: 20px;
+  font-weight: bold;
+  margin-vertical: 10px;
+`;
+export const ExerciseText = styled.Text`
+  color: ${black};
+  font-family: 'Georgia';
+  font-size: 18px;
+  margin-vertical: 5px;
+`;
+export const ExerciseView = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: 'center';
+`;
+// styling in main page
+
+export const UserinfoView = styled.View`
+  align-items: 'center';
+`;
+export const DataView = styled.View`
+  width: 100%;
+  background-color: ${lightGrey};
+  padding: 20px;
+  margin-vertical: 10px;
+  border-radius: 10px;
+`;
+export const DataText = styled.Text`
+  font-size: 20px;
+  margin-left: 10px;
   font-family: 'Georgia';
 `;

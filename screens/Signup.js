@@ -35,9 +35,10 @@ const { grey, lightGrey } = Colors;
 const SignUp = () => {
   const navigation = useNavigation();
 
-  // Performs Sign In in Supabase
-  async function doLogin(email, password) {
+  // Performs Sign Up in Supabase
+  async function doSignUp(email, password) {
     const { user, session, error } = await signUp(email, password);
+
     console.log('test');
     if (error) {
       console.log('error');
@@ -46,15 +47,16 @@ const SignUp = () => {
       ]);
       //console.log("Error");
     } else {
-      console.log('pass');
-      navigation.navigate('GettingStarted');
+      console.log('pass Sign Up');
+      navigation.navigate('UserData');
       //signIn(email, password);
     }
+    console.log(supabase.auth.user());
   }
 
   // optional hide-password feature
   const [hidePassword, setHidePassword] = useState(true);
-  // enabling SignUp button if both validation suceeds
+  // enabling submit button if both validation suceeds
   let isEnabled;
 
   return (
@@ -65,7 +67,7 @@ const SignUp = () => {
 
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => doLogin(values.email, values.password)}
+          onSubmit={(values) => doSignUp(values.email, values.password)}
           // validataion:
           // 1. password length has to >= 6
           // 2. email address has to be valid
@@ -132,11 +134,10 @@ const SignUp = () => {
               <StyledButton onPress={handleSubmit}>
                 <ButtonText>Sign Up</ButtonText>
               </StyledButton>
-              {/*
-                <StyledButton onPress={() => navigation.navigate("GettingStarted")}>
-                  <ButtonText>BYPASS SIGN UP</ButtonText>
-                </StyledButton>
-                */}
+
+              <StyledButton onPress={() => navigation.navigate('Tabs')}>
+                <ButtonText>BYPASS SIGN UP</ButtonText>
+              </StyledButton>
             </StyledFormArea>
           )}
         </Formik>
