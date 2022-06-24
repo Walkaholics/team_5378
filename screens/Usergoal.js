@@ -16,11 +16,11 @@ import {
   InnerContainer,
   PageTitle2,
   StyledFormArea,
-  StyledTextInput2,
   StyledButton,
+  DisabledButton,
   ButtonText,
   Colors,
-  ExitView,
+  ExitIcon,
 } from '../components/styles';
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
@@ -38,6 +38,8 @@ const UserGoal = () => {
     { label: 'Become Healthier', value: 'become-healthier' },
   ];
   const navigation = useNavigation();
+  //enable button navigation to next page only after user has chosen a goal
+  let isEnabled;
 
   // Insert User Goal into Profiles Table
   async function doUpdate(usergoal) {
@@ -97,14 +99,14 @@ const UserGoal = () => {
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <ExitView>
+        <ExitIcon>
           <Octicons
             onPress={() => navigation.navigate('UserData')}
             name={'arrow-left'}
             size={30}
             color={black}
           />
-        </ExitView>
+        </ExitIcon>
         <PageTitle2>What is Your Goal?</PageTitle2>
         <View
           style={{
@@ -136,11 +138,18 @@ const UserGoal = () => {
               />
             )}
           />
-          <StyledButton
-            onPress={() => goal && doUpdate(goal) && createPlan(goal)}
-          >
-            <ButtonText>Next</ButtonText>
-          </StyledButton>
+          {goal ? (isEnabled = true) : (isEnabled = false)}
+          {isEnabled ? (
+            <StyledButton
+              onPress={() => goal && doUpdate(goal) && createPlan(goal)}
+            >
+              <ButtonText>Next</ButtonText>
+            </StyledButton>
+          ) : (
+            <DisabledButton disabled={true}>
+              <ButtonText>Next</ButtonText>
+            </DisabledButton>
+          )}
         </View>
       </InnerContainer>
     </StyledContainer>

@@ -1,25 +1,20 @@
 import { React, useState } from 'react';
-import {
-  StyleSheet,
-  SectionList,
-  View,
-  SafeAreaView,
-  Alert,
-  ScrollView,
-  Switch,
-  Dimensions,
-} from 'react-native';
-import { Text } from '@rneui/themed';
+import { View, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import { signOut, supabase } from '../supabaseClient';
 
 import {
+  StyledContainer,
   InnerContainer,
+  ScrollContainer,
   PageTitle2,
+  PlanspageView,
   SubTitleView,
-  PlanView,
+  ProgressText,
+  WeeksView,
   WeeksText,
+  ExerciseSwitch,
   ExerciseView,
   ExerciseText,
   Colors,
@@ -87,10 +82,10 @@ const PlansPage = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+    <StyledContainer>
+      <ScrollContainer>
         <PageTitle2>Your Weekly Fitness Plan</PageTitle2>
-        <View style={styles.plan}>
+        <PlanspageView>
           <CircularProgress
             radius={90}
             value={80}
@@ -103,18 +98,15 @@ const PlansPage = () => {
             duration={3000}
             onAnimationComplete={() => setValue(50)}
           />
-          <SubTitleView>
-            <Text style={styles.progressCircleText}>Weekly Goal Completed</Text>
-          </SubTitleView>
-        </View>
-        <View style={styles.plan}>
+          <ProgressText>Weekly Goal Completed</ProgressText>
+        </PlanspageView>
+        <View>
           {/*sample styling without selecting plans from Exercise table in supabase*/}
-          <PlanView>
+          <WeeksView>
             <WeeksText>Monday</WeeksText>
             <ExerciseView>
               <ExerciseText>Abs 2x 10reps</ExerciseText>
-              <Switch
-                style={styles.switch}
+              <ExerciseSwitch
                 trackColor={{ false: primary, true: secondary }}
                 thumbColor={primary}
                 ios_backgroundColor={primary}
@@ -124,8 +116,7 @@ const PlansPage = () => {
             </ExerciseView>
             <ExerciseView>
               <ExerciseText>Push-ups 3x 8reps</ExerciseText>
-              <Switch
-                style={styles.switch}
+              <ExerciseSwitch
                 trackColor={{ false: primary, true: secondary }}
                 thumbColor={primary}
                 ios_backgroundColor={primary}
@@ -133,25 +124,25 @@ const PlansPage = () => {
                 value={completed}
               />
             </ExerciseView>
-          </PlanView>
-          <PlanView>
+          </WeeksView>
+          <WeeksView>
             <WeeksText>Tuesday</WeeksText>
-          </PlanView>
-          <PlanView>
+          </WeeksView>
+          <WeeksView>
             <WeeksText>Wednesday</WeeksText>
-          </PlanView>
-          <PlanView>
+          </WeeksView>
+          <WeeksView>
             <WeeksText>Thursday</WeeksText>
-          </PlanView>
-          <PlanView>
+          </WeeksView>
+          <WeeksView>
             <WeeksText>Friday</WeeksText>
-          </PlanView>
-          <PlanView>
+          </WeeksView>
+          <WeeksView>
             <WeeksText>Saturday</WeeksText>
-          </PlanView>
-          <PlanView>
+          </WeeksView>
+          <WeeksView>
             <WeeksText>Sunday</WeeksText>
-          </PlanView>
+          </WeeksView>
         </View>
         <Button color="red" onPress={() => getHealthData()}>
           Health Data
@@ -163,36 +154,9 @@ const PlansPage = () => {
           get progress
         </Button>
         {/*<Button color="warning" onPress={() => navigation.navigate("MainPage")}>Main</Button>*/}
-      </ScrollView>
-    </SafeAreaView>
+      </ScrollContainer>
+    </StyledContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  scrollView: {
-    marginVertical: 5,
-    width: Dimensions.get('screen').width - 65,
-  },
-  plan: {
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  progressCircleText: {
-    fontSize: 16,
-    fontFamily: 'Helvetica',
-    fontWeight: 'bold',
-  },
-  switch: {
-    transform: [{ scaleX: 0.85 }, { scaleY: 0.85 }],
-    marginLeft: 220,
-    position: 'absolute',
-  },
-});
 
 export default PlansPage;

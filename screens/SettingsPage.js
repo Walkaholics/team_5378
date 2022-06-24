@@ -1,9 +1,14 @@
 import { React, useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Alert } from 'react-native';
-import { Text } from '@rneui/themed';
+import { Alert, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import { signOut, supabase } from '../supabaseClient';
+
+import {
+  StyledContainer,
+  InnerContainer,
+  PageTitle2,
+} from '../components/styles';
 
 const SettingsPage = () => {
   const navigation = useNavigation();
@@ -26,35 +31,34 @@ const SettingsPage = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Account Details</Text>
-      <Button color="red" onPress={() => getSessionData()}>
-        get data
-      </Button>
-      <Button color="red" onPress={() => navigation.navigate('UserGoal')}>
-        user goal
-      </Button>
-      <Button color="warning" onPress={() => navigation.navigate('UserData')}>
-        Update Profile
-      </Button>
-      <Button color="warning" onPress={() => doSignOut()}>
-        Sign Out
-      </Button>
+    <StyledContainer>
+      <InnerContainer>
+        <PageTitle2>User Profile Settings</PageTitle2>
+        <Text>Account Details</Text>
+        <View>
+          <Button color="red" onPress={() => getSessionData()}>
+            get data
+          </Button>
+          <Button color="red" onPress={() => navigation.navigate('UserGoal')}>
+            user goal
+          </Button>
+          <Button
+            color="warning"
+            onPress={() => navigation.navigate('UserData')}
+          >
+            Update Profile
+          </Button>
+          <Button color="warning" onPress={() => doSignOut()}>
+            Sign Out
+          </Button>
+        </View>
 
-      {/*<Button color="warning" onPress={() => navigation.navigate("MainPage")}>Main</Button>
+        {/*<Button color="warning" onPress={() => navigation.navigate("MainPage")}>Main</Button>
             <Button color="warning" onPress={() => navigation.navigate("ReportPage")}>Report</Button>
             */}
-    </SafeAreaView>
+      </InnerContainer>
+    </StyledContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default SettingsPage;

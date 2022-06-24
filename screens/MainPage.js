@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import { supabase } from '../supabaseClient';
 
 import {
+  StyledContainer,
   PageTitle2,
   Colors,
   UserinfoView,
   DataView,
   DataText,
+  InnerContainer,
+  ScrollContainer,
 } from '../components/styles';
 
 // import icons
@@ -58,8 +53,8 @@ const MainPage = () => {
   }
   setDetailedData();
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+    <StyledContainer>
+      <ScrollContainer>
         <PageTitle2>WELCOME!😊</PageTitle2>
         <UserinfoView>
           <DataView>
@@ -85,22 +80,9 @@ const MainPage = () => {
         <Button color="red" onPress={() => console.log(getUser())}>
           Get user
         </Button>
-      </ScrollView>
-    </SafeAreaView>
+      </ScrollContainer>
+    </StyledContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  scrollView: {
-    marginVertical: 10,
-    width: Dimensions.get('screen').width - 65,
-  },
-});
 
 export default MainPage;

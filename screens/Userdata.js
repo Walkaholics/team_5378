@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Alert, Pressable } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { userData, supabase } from '../supabaseClient';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -14,10 +14,11 @@ import {
   StyledFormArea,
   StyledTextInput2,
   StyledButton,
+  DisabledButton,
   LeftIcon2,
   ButtonText,
   Colors,
-  ExitView,
+  ExitIcon,
 } from '../components/styles';
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
@@ -39,7 +40,7 @@ var minAge = 18,
 // age
 const age = [];
 for (var i = minAge; i <= maxAge; i++) {
-  age.push({ label: i, value: i });
+  age.push({ label: i.toString(), value: i });
 }
 // gender
 const gender = [
@@ -49,22 +50,22 @@ const gender = [
 // weight
 const weight = [];
 for (var i = minWeight; i <= maxWeight; i++) {
-  weight.push({ label: i, value: i });
+  weight.push({ label: i.toString(), value: i });
 }
 // height
 const height = [];
 for (var i = minHeight; i <= maxHeight; i++) {
-  height.push({ label: i, value: i });
+  height.push({ label: i.toString(), value: i });
 }
 // bodyFatPercentage
 const bodyFat = [];
 for (var i = minBodyFat; i <= maxBodyFat; i++) {
-  bodyFat.push({ label: i, value: i });
+  bodyFat.push({ label: i.toString(), value: i });
 }
 // sleepTime
 const sleepTime = [];
 for (var i = minSleepTime; i <= maxSleepTime; i++) {
-  sleepTime.push({ label: i, value: i });
+  sleepTime.push({ label: i.toString(), value: i });
 }
 
 const UserData = () => {
@@ -76,6 +77,8 @@ const UserData = () => {
   const [value6, setValue6] = useState(null);
 
   const navigation = useNavigation();
+  // enable navigation to next page only after userinput data is complete
+  let isEnabled;
   /*
     const [auth, setAuth] = useState(true);
 
@@ -116,16 +119,16 @@ const UserData = () => {
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <ExitView onPress={() => navigation.navigate('SignUp')}>
+        <ExitIcon onPress={() => navigation.navigate('SignUp')}>
           <Octicons name={'arrow-left'} size={30} color={black} />
-        </ExitView>
+        </ExitIcon>
         <PageTitle2>Tell Us About Yourself</PageTitle2>
 
         <StyledFormArea>
           <Dropdown
             style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
+            placeholderStyle={styles.dropdownTextStyle}
+            selectedTextStyle={styles.dropdownTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={age}
@@ -141,7 +144,6 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                style={styles.icon}
                 name={'arrow-forward-circle-outline'}
                 size={25}
                 color={grey}
@@ -150,8 +152,8 @@ const UserData = () => {
           />
           <Dropdown
             style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
+            placeholderStyle={styles.dropdownTextStyle}
+            selectedTextStyle={styles.dropdownTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={gender}
@@ -167,7 +169,6 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                style={styles.icon}
                 name={'arrow-forward-circle-outline'}
                 size={25}
                 color={grey}
@@ -176,8 +177,8 @@ const UserData = () => {
           />
           <Dropdown
             style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
+            placeholderStyle={styles.dropdownTextStyle}
+            selectedTextStyle={styles.dropdownTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={weight}
@@ -193,7 +194,6 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                style={styles.icon}
                 name={'arrow-forward-circle-outline'}
                 size={25}
                 color={grey}
@@ -202,8 +202,8 @@ const UserData = () => {
           />
           <Dropdown
             style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
+            placeholderStyle={styles.dropdownTextStyle}
+            selectedTextStyle={styles.dropdownTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={height}
@@ -219,7 +219,6 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                style={styles.icon}
                 name={'arrow-forward-circle-outline'}
                 size={25}
                 color={grey}
@@ -228,8 +227,8 @@ const UserData = () => {
           />
           <Dropdown
             style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
+            placeholderStyle={styles.dropdownTextStyle}
+            selectedTextStyle={styles.dropdownTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={bodyFat}
@@ -245,7 +244,6 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                style={styles.icon}
                 name={'arrow-forward-circle-outline'}
                 size={25}
                 color={grey}
@@ -254,8 +252,8 @@ const UserData = () => {
           />
           <Dropdown
             style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
+            placeholderStyle={styles.dropdownTextStyle}
+            selectedTextStyle={styles.dropdownTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={sleepTime}
@@ -271,41 +269,39 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                style={styles.icon}
                 name={'arrow-forward-circle-outline'}
                 size={25}
                 color={grey}
               />
             )}
           />
-          <StyledButton
-            onPress={() => {
-              {
-                /*
-              value1 &&
-              value2 &&
-              value3 &&
-              value4 &&
-              value5 &&
-              value6 &&
-              */
-              }
-              let test = {
-                age: value1,
-                gender: value2,
-                weight: value3,
-                height: value4,
-                bodyFatPercentage: value5,
-                sleepTime: value6,
-              };
+          {value1 && value2 && value3 && value4 && value5 && value6
+            ? (isEnabled = true)
+            : (isEnabled = false)}
+          {isEnabled ? (
+            <StyledButton
+              onPress={() => {
+                let test = {
+                  age: value1,
+                  gender: value2,
+                  weight: value3,
+                  height: value4,
+                  bodyFatPercentage: value5,
+                  sleepTime: value6,
+                };
 
-              console.log(test.age);
-              console.log(test);
-              doUpdate(test);
-            }}
-          >
-            <ButtonText>Next</ButtonText>
-          </StyledButton>
+                console.log(test.age);
+                console.log(test);
+                doUpdate(test);
+              }}
+            >
+              <ButtonText>Next</ButtonText>
+            </StyledButton>
+          ) : (
+            <DisabledButton disabled={true}>
+              <ButtonText>Next</ButtonText>
+            </DisabledButton>
+          )}
         </StyledFormArea>
       </InnerContainer>
     </StyledContainer>
@@ -321,17 +317,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   icon: {
-    marginRight: 15,
+    width: 25,
+    height: 25,
   },
-  placeholderStyle: {
+  dropdownTextStyle: {
     fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
+    marginLeft: 10,
   },
   inputSearchStyle: {
     height: 35,

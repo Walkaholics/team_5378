@@ -15,9 +15,9 @@ import {
   PageTitle1,
   StyledFormArea,
   SubTitle,
-  StyledTextInput1,
+  StyledTextInput,
   StyledButton,
-  LeftIcon1,
+  LeftIcon,
   RightIcon,
   ButtonText,
   Colors,
@@ -136,7 +136,7 @@ const SignUp = () => {
               </StyledButton>
 
               <StyledButton onPress={() => navigation.navigate('Tabs')}>
-                <ButtonText>BYPASS SIGN UP</ButtonText>
+                <ButtonText>Bypass Sign Up</ButtonText>
               </StyledButton>
             </StyledFormArea>
           )}
@@ -161,10 +161,10 @@ const UserTextInput = ({
 }) => {
   return (
     <View>
-      <LeftIcon1>
+      <LeftIcon>
         <Octicons name={icon} size={20} color={grey} />
-      </LeftIcon1>
-      <StyledTextInput1 {...props} />
+      </LeftIcon>
+      <StyledTextInput {...props} />
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons

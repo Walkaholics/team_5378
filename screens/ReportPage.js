@@ -1,20 +1,21 @@
 import { React, useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Alert,
-  Image,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
-import { Text } from '@rneui/themed';
+import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import { signOut, supabase } from '../supabaseClient';
 
 import RNSpeedometer from 'react-native-speedometer';
-import { InnerContainer, PageTitle2, SubTitleView } from '../components/styles';
+import {
+  StyledContainer,
+  InnerContainer,
+  ScrollContainer,
+  PageTitle2,
+  SubTitleView,
+  DataViewR1,
+  DataViewR2,
+  DataTextR,
+  BMRImage,
+} from '../components/styles';
 
 const ReportPage = () => {
   const navigation = useNavigation();
@@ -82,11 +83,11 @@ const ReportPage = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+    <StyledContainer>
+      <ScrollContainer>
         <PageTitle2>Your Report</PageTitle2>
-        <View style={styles.dataView1}>
-          <Text style={styles.data}>Your BMI: </Text>
+        <DataViewR1>
+          <DataTextR>Your BMI: </DataTextR>
           <RNSpeedometer
             value={parseFloat(BMI)}
             minValue={15.1}
@@ -111,9 +112,9 @@ const ReportPage = () => {
               },
             ]}
           />
-        </View>
-        <View style={styles.dataView1}>
-          <Text style={styles.data}>Your BFP: </Text>
+        </DataViewR1>
+        <DataViewR1>
+          <DataTextR>Your BFP: </DataTextR>
           {isMale ? (
             <RNSpeedometer
               value={parseInt(BFP)}
@@ -190,56 +191,23 @@ const ReportPage = () => {
               ]}
             />
           )}
-        </View>
-        <View style={styles.dataView2}>
-          <Text style={styles.data}>Your BMR: {BMR} Calories </Text>
-          <Image
-            style={styles.image}
+        </DataViewR1>
+        <DataViewR2>
+          <DataTextR>Your BMR: {BMR} Calories </DataTextR>
+          <BMRImage
             resizeMode="cover"
             source={require('./../assets/img/TDEE.png')}
           />
-        </View>
+        </DataViewR2>
         <Button color="red" onPress={() => getHealthData()}>
           Health Data
         </Button>
         <Button color="red" onPress={() => getSessionData()}>
           get data
         </Button>
-      </ScrollView>
-    </SafeAreaView>
+      </ScrollContainer>
+    </StyledContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    marginVertical: 10,
-    width: Dimensions.get('screen').width - 65,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  data: {
-    fontFamily: 'Georgia',
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  dataView1: {
-    alignItems: 'center',
-    marginVertical: 50,
-    flexDirection: 'row',
-  },
-  dataView2: {
-    alignItems: 'center',
-    marginVertical: 50,
-    flexDirection: 'column',
-  },
-  image: {
-    height: Dimensions.get('screen').width - 65,
-    width: Dimensions.get('screen').width - 65,
-  },
-});
 
 export default ReportPage;
