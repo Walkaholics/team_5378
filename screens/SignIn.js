@@ -1,10 +1,9 @@
-import { React, useState } from "react";
-import { StyleSheet, View, SafeAreaView, Alert, Pressable} from "react-native";
-import { Text } from "@rneui/themed"; 
-import { useNavigation } from "@react-navigation/native"
-import { Button } from "@rneui/base";
+import { React, useState } from 'react';
+import { StyleSheet, View, SafeAreaView, Alert, Pressable } from 'react-native';
+import { Text } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/base';
 import { signIn, supabase } from '../supabaseClient';
-
 
 import { StatusBar } from 'expo-status-bar';
 // import formik
@@ -15,9 +14,9 @@ import {
   PageTitle1,
   StyledFormArea,
   SubTitle,
-  StyledTextInput1,
+  StyledTextInput,
   StyledButton,
-  LeftIcon1,
+  LeftIcon,
   RightIcon,
   ButtonText,
   Colors,
@@ -32,109 +31,89 @@ import { Octicons, Ionicons } from '@expo/vector-icons';
 const { grey, lightGrey } = Colors;
 
 const SignIn = () => {
-    const navigation = useNavigation();
-    const [loading, setLoading] = useState(false)
-    
-    // Performs Sign In in Supabase
-    async function doSignIn(email, password) {
-      /*
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+
+  // Performs Sign In in Supabase
+  async function doSignIn(email, password) {
+    try {
+      setLoading(true);
       const { user, session, error } = await signIn(email, password);
       if (error) {
-        Alert.alert("Error Signing Up", error.message, [
-          { text: "OK", onPress: () => null },
+        Alert.alert('Error Signing Up', error.message, [
+          { text: 'OK', onPress: () => null },
         ]);
-      console.log(error);
-      } else {
-        navigation.navigate("Tabs");
-      }
-      */
-      try {
-        setLoading(true)
-        const { user, session, error } = await signIn(email, password);
-        if (error) {
-          Alert.alert("Error Signing Up", error.message, [
-            { text: "OK", onPress: () => null },
-          ]);
         console.log(error);
-        } else {
-          navigation.navigate("Tabs");
-        }
-        console.log(supabase.auth.user());
-      } finally {
-        setLoading(false)
-        
+      } else {
+        navigation.navigate('Tabs');
       }
+      console.log(supabase.auth.user());
+    } finally {
+      setLoading(false);
     }
+  }
 
-    async function selectTable() {
-      console.log("test")
+  async function bypassSignin() {
+    navigation.navigate('Tabs');
+  }
 
-      /*
-      const { data, error } = await supabase
-      .from('profiles')
-      .select()
-      console.log(data);
-      */
-      navigation.navigate("Tabs");
-    }
+  const [hidePassword, setHidePassword] = useState(true);
 
-    const [hidePassword, setHidePassword] = useState(true);
+  return (
+    <StyledContainer>
+      <StatusBar style="dark" />
+      <InnerContainer>
+        <PageTitle1>Log into your Account</PageTitle1>
 
-      return (
-        <StyledContainer>
-          <StatusBar style="dark" />
-          <InnerContainer>
-            <PageTitle1>Log into your Account</PageTitle1>
-    
-            <Formik
-              initialValues={{ email: '', password: '' }}
-              onSubmit={(values) => 
-                doSignIn(values.email, values.password)}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <StyledFormArea>
-                  <UserTextInput
-                    icon="mail"
-                    placeholder="Email"
-                    placeholderTextColor={grey}
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    value={values.email}
-                    keyboardType="email-address"
-                  />
-    
-                  <UserTextInput
-                    icon="lock"
-                    placeholder="Password"
-                    placeholderTextColor={grey}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    secureTextEntry={hidePassword}
-                    isPassword={true}
-                    hidePassword={hidePassword}
-                    setHidePassword={setHidePassword}
-                  />
-                  <StyledButton onPress={handleSubmit}>
-                    <ButtonText>Sign In</ButtonText>
-                  </StyledButton>
-                  <StyledButton onPress={selectTable}>
-                    <ButtonText>Bypass Sign In</ButtonText>
-                  </StyledButton>
-                </StyledFormArea>
-              )}
-            </Formik>
-            <SubTitleView>
-              <SubTitle>Don't have an account? </SubTitle>
-              <TextLink onPress={() => navigation.navigate("SignUp")}>
-                <TextLinkContent>Sign up</TextLinkContent>
-              </TextLink>
-            </SubTitleView>
-          </InnerContainer>
-        </StyledContainer>
-      );
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          onSubmit={(values) => doSignIn(values.email, values.password)}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <StyledFormArea>
+              <UserTextInput
+                icon="mail"
+                placeholder="Email"
+                placeholderTextColor={grey}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType="email-address"
+              />
+
+              <UserTextInput
+                icon="lock"
+                placeholder="Password"
+                placeholderTextColor={grey}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+                secureTextEntry={hidePassword}
+                isPassword={true}
+                hidePassword={hidePassword}
+                setHidePassword={setHidePassword}
+              />
+              <StyledButton onPress={handleSubmit}>
+                <ButtonText>Sign In</ButtonText>
+              </StyledButton>
+              {/*
+              <StyledButton onPress={bypassSignin}>
+                <ButtonText>Bypass Sign In</ButtonText>
+              </StyledButton>
+              */}
+            </StyledFormArea>
+          )}
+        </Formik>
+        <SubTitleView>
+          <SubTitle>Don't have an account? </SubTitle>
+          <TextLink onPress={() => navigation.navigate('SignUp')}>
+            <TextLinkContent>Sign up</TextLinkContent>
+          </TextLink>
+        </SubTitleView>
+      </InnerContainer>
+    </StyledContainer>
+  );
 };
-
 
 const UserTextInput = ({
   icon,
@@ -145,10 +124,10 @@ const UserTextInput = ({
 }) => {
   return (
     <View>
-      <LeftIcon1>
+      <LeftIcon>
         <Octicons name={icon} size={20} color={grey} />
-      </LeftIcon1>
-      <StyledTextInput1 {...props} />
+      </LeftIcon>
+      <StyledTextInput {...props} />
       {isPassword && (
         <RightIcon onPress={() => setHidePassword(!hidePassword)}>
           <Ionicons
@@ -161,7 +140,5 @@ const UserTextInput = ({
     </View>
   );
 };
-
-  
 
 export default SignIn;

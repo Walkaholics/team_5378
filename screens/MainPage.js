@@ -1,81 +1,87 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, SafeAreaView} from "react-native";
-import { useNavigation } from "@react-navigation/native"
-import { Button } from "@rneui/base";
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/base';
 import { supabase } from '../supabaseClient';
 
-import { StatusBar } from 'expo-status-bar';
 import {
   StyledContainer,
-  InnerContainer,
-  PageTitle1,
-  StyledFormArea,
-  SubTitle,
-  StyledTextInput1,
-  StyledButton,
-  LeftIcon1,
-  RightIcon,
-  ButtonText,
+  PageTitle2,
   Colors,
-  TextLink,
-  TextLinkContent,
-  SubTitleView,
+  UserinfoView,
+  DataView,
+  DataText,
+  InnerContainer,
+  ScrollContainer,
 } from '../components/styles';
 
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
 
-// Progress Bar
-import CircularProgress from "react-native-circular-progress-indicator";
-
 // Colors
 const { grey, lightGrey } = Colors;
 
-
-
 const MainPage = () => {
-    const navigation = useNavigation();
-    const user = supabase.auth.user();
-    function getUser() {
-      return user;
-    }
+  const navigation = useNavigation();
+  const user = supabase.auth.user();
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [BFP, setBFP] = useState('');
+  const [sleepTime, setSleepTime] = useState('');
 
-    const [value, setValue] = useState(0);
+  // Get User Input Data
+  async function getHealthData() {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select()
+      .eq('id', supabase.auth.user().id);
+    return data[0];
+  }
 
-    return (
-        <StyledContainer>
-          <InnerContainer>
-            <StatusBar style="dark" />
-              <PageTitle1>WELCOME</PageTitle1>
-              
-              <CircularProgress
-                radius={90}
-                value={85}
-                textColor='#222'
-                fontSize={20}
-                valueSuffix={'%'}
-                inActiveStrokeColor={'#2ecc71'}
-                inActiveStrokeOpacity={0.2}
-                inActiveStrokeWidth={6}
-                duration={3000}
-                onAnimationComplete={() => setValue(50)}
-              />
-              
-              <Button color="red" onPress={() => console.log(getUser())}>Get user</Button>
-          </InnerContainer>
-          
-        </StyledContainer>
-    )
-
-}
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+  //get detailed data
+  async function setDetailedData() {
+    const data = await getHealthData();
+    setAge(data.Age);
+    setGender(data.Gender);
+    setWeight(data.Weight);
+    setHeight(data.Height);
+    setBFP(data.BFP);
+    setSleepTime(data.Sleep);
+  }
+  setDetailedData();
+  return (
+    <StyledContainer>
+      <ScrollContainer>
+        <PageTitle2>WELCOME!😊</PageTitle2>
+        <UserinfoView>
+          <DataView>
+            <DataText>Age: {age}</DataText>
+          </DataView>
+          <DataView>
+            <DataText>Gender: {gender}</DataText>
+          </DataView>
+          <DataView>
+            <DataText>Weight: {weight}kg</DataText>
+          </DataView>
+          <DataView>
+            <DataText>Height: {height}cm</DataText>
+          </DataView>
+          <DataView>
+            <DataText>Body Fat Percentage: {BFP}%</DataText>
+          </DataView>
+          <DataView>
+            <DataText>Sleep Time: {sleepTime} hours</DataText>
+          </DataView>
+        </UserinfoView>
+        {/*
+        <Button color="red" onPress={() => console.log(getUser())}>
+          Get user
+        </Button>
+        */}
+      </ScrollContainer>
+    </StyledContainer>
+  );
+};
 
 export default MainPage;

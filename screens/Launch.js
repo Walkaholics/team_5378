@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, SafeAreaView, ActivityIndicator, FlatList, Image, Pressable, Button} from "react-native";
+import { Button} from "react-native";
 import { useNavigation } from "@react-navigation/native"
 import { getUser, supabase } from '../supabaseClient';
 import {
@@ -13,6 +13,7 @@ import {
   StyledButton,
   ButtonText,
   StyledFormArea,
+  
 } from '../components/styles';
 
 const Home = () => {
@@ -36,7 +37,7 @@ const Home = () => {
               <ButtonText>Sign In</ButtonText>
             </StyledButton>
             
-            <Button color="red" title="Get data" onPress={() => getSessionData()}></Button>            
+            {/*<Button color="red" title="Get data" onPress={() => getSessionData()}></Button>*/}         
           </StyledFormArea>
           <SubTitleView>
             <SubTitle>Don't have an account? </SubTitle>

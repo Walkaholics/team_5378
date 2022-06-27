@@ -1,7 +1,7 @@
 //rnfe
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import Home from "./screens/Home";
+import Launch from "./screens/Launch";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import MainPage from "./screens/MainPage";
@@ -25,7 +25,7 @@ const StackNavigator = () => {
         //<Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Group>
-                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="Launch" component={Launch} />
                 <Stack.Screen name="SignIn" component={SignIn} />
                 <Stack.Screen name="SignUp" component={SignUp} />
                 <Stack.Screen name="UserData" component={UserData} />
