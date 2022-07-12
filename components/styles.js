@@ -272,3 +272,9 @@ export const ExerciseDoneText = styled.Text`
   font-size: 18px;
   margin-vertical: 5px;
 `;
+
+export const ProfilePicture = styled.Image`
+  width: 150px;
+  height: 150px;
+  margin-top: 0px;
+`;

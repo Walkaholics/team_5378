@@ -96,11 +96,11 @@ const SignIn = () => {
               <StyledButton onPress={handleSubmit}>
                 <ButtonText>Sign In</ButtonText>
               </StyledButton>
-              {/*
+              
               <StyledButton onPress={bypassSignin}>
                 <ButtonText>Bypass Sign In</ButtonText>
               </StyledButton>
-              */}
+              
             </StyledFormArea>
           )}
         </Formik>

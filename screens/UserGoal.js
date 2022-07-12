@@ -242,6 +242,96 @@ const UserGoal = () => {
   
   }
 
+
+
+  // Logic to create DIET based on user goal
+  async function updateDiet(usergoal) {
+    console.log("function works")
+    if (usergoal == "build-muscles") {
+      console.log("build muscles")
+      const { data, error } = await supabase.from("Diet").upsert([
+        {
+          id: supabase.auth.user().id,
+          Name: "Egg & Toast",
+          Day: 1,
+          MealTime: "Breakfast",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "3 Meat + 1 Veg + Rice",
+          Day: 1,
+          MealTime: "Lunch",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "2 Meat + 1 Veg + Rice",
+          Day: 1,
+          MealTime: "Dinner",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "Oatmeal",
+          Day: 2,
+          MealTime: "Breakfast",
+        }
+      ])
+    } else if (usergoal == "become-healthier") {
+      const { data, error } = await supabase.from("Diet").upsert([
+        {
+          id: supabase.auth.user().id,
+          Name: "Egg & Toast",
+          Day: 1,
+          MealTime: "Breakfast",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "2 Meat + 1 Veg + Rice",
+          Day: 1,
+          MealTime: "Lunch",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "2 Meat + 1 Veg + Rice",
+          Day: 1,
+          MealTime: "Dinner",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "Oatmeal",
+          Day: 2,
+          MealTime: "Breakfast",
+        }
+      ]);
+    } else if (usergoal == "lose-weight") {
+      const { data, error } = await supabase.from("Diet").upsert([
+        {
+          id: supabase.auth.user().id,
+          Name: "Egg & Toast",
+          Day: 1,
+          MealTime: "Breakfast",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "2 Meat + 1 Veg + Rice",
+          Day: 1,
+          MealTime: "Lunch",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "2 Meat + 1 Veg + Rice",
+          Day: 1,
+          MealTime: "Dinner",
+        },
+        {
+          id: supabase.auth.user().id,
+          Name: "Oatmeal",
+          Day: 2,
+          MealTime: "Breakfast",
+        }
+      ]);
+    }
+    }
+
   return (
     <StyledContainer>
       <StatusBar style="dark" />
@@ -288,7 +378,8 @@ const UserGoal = () => {
           {goal ? (isEnabled = true) : (isEnabled = false)}
           {isEnabled ? (
             <StyledButton
-              onPress={() => goal && doUpdate(goal) && createPlan(goal)}
+              
+              onPress={() => goal && doUpdate(goal) && createPlan(goal) && updateDiet(goal)}
             >
               <ButtonText>Next</ButtonText>
             </StyledButton>

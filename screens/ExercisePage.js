@@ -27,32 +27,23 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { set } from 'react-native-reanimated';
-import { getDrawerStatusFromState } from '@react-navigation/drawer';
 
 
 // Colors
 const { primary, secondary, grey } = Colors;
 
-const PlansPage = () => {
+const ExercisePage = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState(0);
-  const [plan, setPlan] = useState([]);
   const [progress, setProgress] = useState(0);
   const [goal, setGoal] = useState('');
   //sample styling without selecting plans from Exercise table in supabase
   //after using real data from supabase, need to add useState variables for multiple switches
   const [completed, setCompleted] = useState(false);
-  const [date, setDate] = useState(null);
 
 
 
 
-  const getDate = () => {
-    let today = new Date();
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    setDate(date);
-    console.log(date);
-  }
 
   const toggleSwitch = (row) => {
     if (completed) {
@@ -90,6 +81,8 @@ const PlansPage = () => {
     return data[0];
   }
 
+  const [plan, setPlan] = useState([]);
+
 
   // Get Fitness Plan
   async function getPlan() {
@@ -106,7 +99,6 @@ const PlansPage = () => {
   useEffect(() => {
     getPlan();
     getProgress();
-    getDate();
   }, []);
 
   // Updates when plan state is updated
@@ -115,7 +107,6 @@ const PlansPage = () => {
   }, [plan]);
 
   // Render on clicking switch
-
   useEffect(() => {
     getPlan();
     getProgress();
@@ -123,7 +114,6 @@ const PlansPage = () => {
 
   // Get Percentage of Excercises completed this week
   async function getProgress() {
-    
     let { data, error, status } = await supabase
     .from("Exercise")
     .select("*", { count: 'exact'}) // if you don't want to return any rows, you can use { count: 'exact', head: true }
@@ -138,7 +128,6 @@ const PlansPage = () => {
     }
     console.log("progress " + progress)
   }
-  
 
   // Convert to day names
   function dayStringConverter(i) {
@@ -166,13 +155,10 @@ const PlansPage = () => {
     }
   }
 
-
-
   return (
       <StyledContainer>
       <ScrollContainer>
-        <PageTitle2>Your Personal Plan</PageTitle2>
-        
+        <PageTitle2>Your Weekly Fitness Plan</PageTitle2>
         <PlanspageView>
           <CircularProgress
               radius={90}
@@ -187,9 +173,78 @@ const PlansPage = () => {
               onAnimationComplete={() => setValue(50)}
           />
           <ProgressText>Weekly Goal Completed</ProgressText>
-          <ProgressText>DATE: {date}</ProgressText>
         </PlanspageView>
-  
+        <View>
+            {
+              plan.map((item, index) => {
+                if (index == 0) { // Very first exercise on Monday
+                  if (item.Status != 1) { // Exercise not completed
+                  return <View key={index} >
+                  <WeeksText>Monday</WeeksText>
+                  <ExerciseView>
+                    <ExerciseText> {item.Name} + {item.Amount} </ExerciseText>
+                    <ExerciseSwitch
+                      trackColor={{ false: primary, true: secondary }}
+                      thumbColor={primary}
+                      ios_backgroundColor={primary}
+                      onValueChange={() => updateStatus(item.Row)}
+                      value={true}
+                    />
+                  </ExerciseView>
+                  </View>;
+                  } else { // Exercise Completed
+                    return <View key={index}>
+                    <WeeksText>Monday</WeeksText>
+                    <ExerciseDoneText> {item.Name} + {item.Amount} - DONE! </ExerciseDoneText>
+                    </View>;
+                  }
+                  
+                } 
+                
+                else if (item.Day == plan[index - 1].Day){  //Current exercise is same day as previous
+                  if (item.Status != 1) {
+                  return <ExerciseView key={index}>
+                    <ExerciseText> {item.Name} + {item.Amount} </ExerciseText>
+                    <ExerciseSwitch
+                      trackColor={{ false: primary, true: secondary }}
+                      thumbColor={primary}
+                      ios_backgroundColor={primary}
+                      onValueChange={() => updateStatus(item.Row)}
+                      value={true}
+                    />
+                  </ExerciseView>;
+                  } else {
+                    return <View key={index}>
+                    <ExerciseDoneText> {item.Name} + {item.Amount} - DONE! </ExerciseDoneText>
+                    </View>;
+                  }
+                } else { // Next Day
+                  if (item.Status != 1) {
+                  return <View key={index}>
+                  <WeeksText>{dayStringConverter(item.Day)}</WeeksText>
+                  <ExerciseView>
+                    <ExerciseText> {item.Name} + {item.Amount} </ExerciseText>
+                    <ExerciseSwitch
+                      trackColor={{ false: primary, true: secondary }}
+                      thumbColor={primary}
+                      ios_backgroundColor={primary}
+                      onValueChange={() => updateStatus(item.Row)}
+                      value={true}
+                    />
+                  </ExerciseView>
+                  </View>;
+                  } else {
+                    return <View key={index}>
+                    <WeeksText>{dayStringConverter(item.Day)}</WeeksText>
+                    <ExerciseDoneText> {item.Name} + {item.Amount} - DONE! </ExerciseDoneText>
+                    </View>;
+                  }
+                }
+              
+                  
+              })
+            }
+        </View>
         {/*
         <Button color="red" onPress={() => getHealthData()}>
           Health Data
@@ -202,15 +257,12 @@ const PlansPage = () => {
         </Button>
         */}
       </ScrollContainer>
-      <StyledButton onPress={() => navigation.navigate('ExercisePage')}>
-          <ButtonText>Exercise</ButtonText>
-      </StyledButton>
-      <StyledButton onPress={() => navigation.navigate('DietPage')}>
-          <ButtonText>Diet</ButtonText>
+      <StyledButton onPress={() => navigation.navigate('PlansPage')}>
+          <ButtonText>Back</ButtonText>
       </StyledButton>
     </StyledContainer>
   );
 };
 
 
-export default PlansPage;
+export default ExercisePage;
