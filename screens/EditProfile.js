@@ -1,12 +1,12 @@
-import { React, useEffect, useState } from 'react';
-import { StyleSheet, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { userData, supabase } from '../supabaseClient';
-import { Dropdown } from 'react-native-element-dropdown';
+import { useEffect, useState, useRef, createRef } from "react";
+import { StyleSheet, Alert, View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { userData, supabase } from "../supabaseClient";
+import { Dropdown } from "react-native-element-dropdown";
 
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 // import formik
-import { Formik } from 'formik';
+import { Formik } from "formik";
 import {
   StyledContainer,
   InnerContainer,
@@ -19,9 +19,14 @@ import {
   ButtonText,
   Colors,
   ExitIcon,
-} from '../components/styles';
+  ProfilePicture,
+} from "../components/styles";
 // import icons
-import { Octicons, Ionicons } from '@expo/vector-icons';
+import { Octicons, Ionicons } from "@expo/vector-icons";
+
+import BottomSheet from "reanimated-bottom-sheet";
+import Animated from "react-native-reanimated";
+import * as React from "react";
 
 // Colors
 const { grey, lightGrey, black } = Colors;
@@ -31,12 +36,12 @@ var minAge = 18,
   minWeight = 30,
   minHeight = 130,
   minBodyFat = 15,
-  minSleepTime = 1.0,
+  minSleepTime = 1,
   maxAge = 100,
   maxWeight = 250,
   maxHeight = 200,
   maxBodyFat = 36,
-  maxSleepTime = 15.0;
+  maxSleepTime = 15;
 // age
 const age = [];
 for (var i = minAge; i <= maxAge; i++) {
@@ -44,8 +49,8 @@ for (var i = minAge; i <= maxAge; i++) {
 }
 // gender
 const gender = [
-  { label: 'Female', value: 'female' },
-  { label: 'Male', value: 'male' },
+  { label: "Female", value: "female" },
+  { label: "Male", value: "male" },
 ];
 // weight
 const weight = [];
@@ -68,39 +73,55 @@ for (var i = minSleepTime; i <= maxSleepTime; i++) {
   sleepTime.push({ label: i.toString(), value: i });
 }
 
-const UserData = () => {
+const goal = [
+  { label: "Lose Weight", value: "lose-weight" },
+  { label: "Build Muscles", value: "build-muscles" },
+  { label: "Become Healthier", value: "become-healthier" },
+];
+
+const EditProfile = () => {
   const [value1, setValue1] = useState(null);
   const [value2, setValue2] = useState(null);
   const [value3, setValue3] = useState(null);
   const [value4, setValue4] = useState(null);
   const [value5, setValue5] = useState(null);
   const [value6, setValue6] = useState(null);
+  const [value7, setValue7] = useState(null);
 
-  const navigation = useNavigation();
-  const [BMR, setBMR] = useState(null);
-  const [BMI, setBMI] = useState(null);
-  // enable navigation to next page only after userinput data is complete
-  let isEnabled;
-  //calculate BMR and BMI
-  async function handleBMRnBMI(age, gender, weight, height) {
-    let bmr = 0;
-    if (gender == 'male') {
-      //console.log("you are male");
-      // Formula: 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years)
-      bmr = 88.362;
-      13.397 * weight + 4.799 * height - 5.677 * age;
-    } else {
-      bmr = 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age;
-    }
-    let bmi = (weight / ((height * height) / 10000)).toFixed(2);
-    setBMR(Math.round(bmr, 1));
-    setBMI(bmi);
+  const user = supabase.auth.user();
+  // Get User Input Data
+  async function getHealthData() {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select()
+      .eq("id", supabase.auth.user().id);
+    return data[0];
   }
 
+  //get detailed data
+  async function setDetailedData() {
+    const data = await getHealthData();
+    setValue1(data.Age);
+    setValue2(data.Gender);
+    setValue3(data.Weight);
+    setValue4(data.Height);
+    setValue5(data.BFP);
+    setValue6(data.Sleep);
+    setValue7(data.Goal);
+  }
+  // Render once only
+  useEffect(() => {
+    setDetailedData();
+  }, []);
+
+  const navigation = useNavigation();
+  // enable navigation to next page only after userinput data is complete
+  let isEnabled;
+
   // Insert into profiles table in Supabase
-  async function doUpdate(values, bmr, bmi) {
+  async function doUpdate(values) {
     //console.log(values.gender)
-    const { data, error } = await supabase.from('profiles').upsert({
+    const { data, error } = await supabase.from("profiles").upsert({
       id: supabase.auth.user().id,
       Age: values.age,
       Gender: values.gender,
@@ -108,33 +129,63 @@ const UserData = () => {
       Height: values.height,
       BFP: values.bodyFatPercentage,
       Sleep: values.sleepTime,
-      BMR: bmr,
-      BMI: bmi,
+      Goal: values.goal,
     });
+
     if (error) {
-      Alert.alert('Error Updating', error.message, [
-        { text: 'OK', onPress: () => null },
+      Alert.alert("Error Updating", error.message, [
+        { text: "OK", onPress: () => null },
       ]);
       //console.log("Error");
     } else {
-      console.log(BMR);
-      console.log(BMI);
-      navigation.navigate('UserGoal');
+      navigation.navigate("SettingsPage");
     }
   }
 
-  useEffect(() => {
-    handleBMRnBMI(value1, value2, value3, value4);
-  }, []);
+  const renderInner = () => (
+    <View
+      style={{
+        backgroundColor: "white",
+        padding: 16,
+        height: 450,
+      }}
+    >
+      <Text>Swipe down to close</Text>
+    </View>
+  );
+
+  const renderHeader = () => <Text>Swipe down to close</Text>;
+
+  //Bottom sheet
+  const bs = createRef();
+  const fall = new Animated.Value(1);
 
   return (
     <StyledContainer>
+      {/*
+      <StyledButton
+          title="Open Bottom Sheet"
+          onPress={() => bs.current.snapTo(0)}
+        />
+      <BottomSheet
+        ref={bs}
+        snapPoints={[330, 0]}
+        renderContent={renderInner}
+        initialSnap={1}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+      />
+      */}
       <StatusBar style="dark" />
       <InnerContainer>
-        <ExitIcon onPress={() => navigation.navigate('SignUp')}>
-          <Octicons name={'arrow-left'} size={30} color={black} />
+        <ProfilePicture
+          resizeMode="cover"
+          source={require("./../assets/img/adaptive-icon.png")}
+        />
+        <ExitIcon onPress={() => navigation.navigate("SettingsPage")}>
+          <Octicons name={"arrow-left"} size={30} color={black} />
         </ExitIcon>
-        <PageTitle2>Tell Us About Yourself</PageTitle2>
+        {/*<PageTitle2>Edit Profile</PageTitle2>*/}
 
         <StyledFormArea>
           <Dropdown
@@ -156,7 +207,7 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                name={'arrow-forward-circle-outline'}
+                name={"arrow-forward-circle-outline"}
                 size={25}
                 color={grey}
               />
@@ -181,7 +232,7 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                name={'arrow-forward-circle-outline'}
+                name={"arrow-forward-circle-outline"}
                 size={25}
                 color={grey}
               />
@@ -206,7 +257,7 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                name={'arrow-forward-circle-outline'}
+                name={"arrow-forward-circle-outline"}
                 size={25}
                 color={grey}
               />
@@ -231,7 +282,7 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                name={'arrow-forward-circle-outline'}
+                name={"arrow-forward-circle-outline"}
                 size={25}
                 color={grey}
               />
@@ -256,7 +307,7 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                name={'arrow-forward-circle-outline'}
+                name={"arrow-forward-circle-outline"}
                 size={25}
                 color={grey}
               />
@@ -281,13 +332,40 @@ const UserData = () => {
             }}
             renderLeftIcon={() => (
               <Ionicons
-                name={'arrow-forward-circle-outline'}
+                name={"arrow-forward-circle-outline"}
                 size={25}
                 color={grey}
               />
             )}
           />
-          {value1 && value2 && value3 && value4 && value5 && value6
+
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.dropdownTextStyle}
+            selectedTextStyle={styles.dropdownTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={goal}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder="Goal"
+            searchPlaceholder="Search..."
+            value={value7}
+            onChange={(item) => {
+              setValue7(item.value);
+            }}
+            renderLeftIcon={() => (
+              <Ionicons
+                name={"arrow-forward-circle-outline"}
+                size={25}
+                color={grey}
+              />
+            )}
+          />
+
+          {value1 && value2 && value3 && value4 && value5 && value6 && value7
             ? (isEnabled = true)
             : (isEnabled = false)}
           {isEnabled ? (
@@ -300,16 +378,18 @@ const UserData = () => {
                   height: value4,
                   bodyFatPercentage: value5,
                   sleepTime: value6,
+                  goal: value7,
                 };
-                handleBMRnBMI(value1, value2, value3, value4);
-                doUpdate(test, BMR, BMI);
+                //console.log(test.age);
+                //console.log(test);
+                doUpdate(test);
               }}
             >
-              <ButtonText>Next</ButtonText>
+              <ButtonText>Confirm</ButtonText>
             </StyledButton>
           ) : (
             <DisabledButton disabled={true}>
-              <ButtonText>Next</ButtonText>
+              <ButtonText>Confirm</ButtonText>
             </DisabledButton>
           )}
         </StyledFormArea>
@@ -340,4 +420,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserData;
+export default EditProfile;

@@ -43,6 +43,7 @@
     "react-native-svg": "^12.3.0",
     "react-native-url-polyfill": "^1.3.0",
     "react-native-web": "0.17.7",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "styled-components": "^5.3.5",
     "webpack-dev-server": "~3.11.0"
   },

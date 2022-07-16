@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import { supabase } from '../supabaseClient';
@@ -12,13 +12,16 @@ import {
   DataText,
   InnerContainer,
   ScrollContainer,
+  StyledButton,
+  ButtonText,
+  DataTitleText,
 } from '../components/styles';
 
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
 
 // Colors
-const { grey, lightGrey } = Colors;
+const { grey, lightGrey, black } = Colors;
 
 const MainPage = () => {
   const navigation = useNavigation();
@@ -29,57 +32,88 @@ const MainPage = () => {
   const [height, setHeight] = useState('');
   const [BFP, setBFP] = useState('');
   const [sleepTime, setSleepTime] = useState('');
+  const [GOAL, setGOAL] = useState('');
+  const [healthData, setHealthData] = useState(null);
 
   // Get User Input Data
   async function getHealthData() {
+    console.log('get health');
     const { data, error } = await supabase
       .from('profiles')
       .select()
       .eq('id', supabase.auth.user().id);
-    //.then(response => {return response})
-    //console.log(data[0]);
+    setHealthData(data[0]);
     return data[0];
   }
 
   //get detailed data
   async function setDetailedData() {
+    console.log('set health');
     const data = await getHealthData();
+    //const data = healthData;
     setAge(data.Age);
     setGender(data.Gender);
     setWeight(data.Weight);
     setHeight(data.Height);
     setBFP(data.BFP);
     setSleepTime(data.Sleep);
+    setGOAL(data.Goal);
   }
-  setDetailedData();
+  // Render once only
+  /*
+  useEffect(() => {
+    getHealthData();
+    setDetailedData();
+  }, []);
+*/
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      setDetailedData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <StyledContainer>
       <ScrollContainer>
         <PageTitle2>WELCOME!😊</PageTitle2>
         <UserinfoView>
           <DataView>
-            <DataText>Age: {age}</DataText>
+            <DataTitleText>Age:</DataTitleText>
+            <DataText>{age}</DataText>
           </DataView>
           <DataView>
-            <DataText>Gender: {gender}</DataText>
+            <DataTitleText>Gender:</DataTitleText>
+            <DataText>{gender}</DataText>
           </DataView>
           <DataView>
-            <DataText>Weight: {weight}kg</DataText>
+            <DataTitleText>Weight:</DataTitleText>
+            <DataText>{weight}kg</DataText>
           </DataView>
           <DataView>
-            <DataText>Height: {height}cm</DataText>
+            <DataTitleText>Height:</DataTitleText>
+            <DataText>{height} cm</DataText>
           </DataView>
           <DataView>
-            <DataText>Body Fat Percentage: {BFP}%</DataText>
+            <DataTitleText>Body Fat Percentage:</DataTitleText>
+            <DataText>{BFP}%</DataText>
           </DataView>
           <DataView>
-            <DataText>Sleep Time: {sleepTime} hours</DataText>
+            <DataTitleText>Sleep Time:</DataTitleText>
+            <DataText>{sleepTime} hours</DataText>
+          </DataView>
+          <DataView>
+            <DataTitleText>Goal:</DataTitleText>
+            <DataText>{GOAL}</DataText>
           </DataView>
         </UserinfoView>
-
+        {/*
         <Button color="red" onPress={() => console.log(getUser())}>
           Get user
         </Button>
+        */}
       </ScrollContainer>
     </StyledContainer>
   );

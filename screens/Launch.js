@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  ActivityIndicator,
-  FlatList,
-  Image,
-  Pressable,
-  Button,
-} from 'react-native';
+import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getUser, supabase } from '../supabaseClient';
 import {
@@ -25,7 +15,7 @@ import {
   StyledFormArea,
 } from '../components/styles';
 
-const Launch = () => {
+const Home = () => {
   const navigation = useNavigation();
 
   // Test to see if there is currently a Supabase session(logged in)
@@ -46,11 +36,7 @@ const Launch = () => {
             <ButtonText>Sign In</ButtonText>
           </StyledButton>
 
-          <Button
-            color="red"
-            title="Get data"
-            onPress={() => getSessionData()}
-          ></Button>
+          {/*<Button color="red" title="Get data" onPress={() => getSessionData()}></Button>*/}
         </StyledFormArea>
         <SubTitleView>
           <SubTitle>Don't have an account? </SubTitle>
@@ -63,4 +49,4 @@ const Launch = () => {
   );
 };
 
-export default Launch;
+export default Home;

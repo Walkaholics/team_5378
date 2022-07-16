@@ -1,3 +1,7 @@
+import Constants from 'expo-constants';
+
+const StatusBarHeight = Constants.StatusBarHeight;
+
 import styled from 'styled-components';
 import {
   View,
@@ -55,7 +59,7 @@ export const ScrollContainer = styled.ScrollView`
 export const PageLogo = styled.Image`
   width: 275px;
   height: 275px;
-  margin-top: 50px;
+  margin-top: ${Dimensions.get('screen').height / 8}px;
 `;
 
 export const StyledFormArea = styled.View`
@@ -104,11 +108,8 @@ export const PageTitle2 = styled.Text`
   font-size: 35px;
   font-weight: bold;
   color: ${black};
-  padding-right: 40px;
-  padding-bottom: 5px;
-  margin-top: 55px;
-  margin-bottom: 10px;
-  text-align: left;
+  padding-right: 30px;
+  margin: 55px 20px 15px 20px;
   font-family: 'Georgia';
 `;
 
@@ -185,19 +186,17 @@ export const ErrorMesssage = styled.Text`
 
 //styling in ReportPage
 export const DataViewR1 = styled.View`
-  align-items: 'center';
+  align-items: center;
   margin-vertical: 50px;
-  flex-direction: 'row';
+  flex-direction: row;
 `;
 export const DataViewR2 = styled.View`
-  align-items: 'center';
   margin-vertical: 50px;
-  flex-direction: 'column';
 `;
 export const DataTextR = styled.Text`
   font-family: 'Georgia';
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 export const BMRImage = styled.Image`
   height: ${Dimensions.get('screen').width - 65}px;
@@ -206,13 +205,19 @@ export const BMRImage = styled.Image`
 
 // styling in PlansPage
 export const PlanspageView = styled.View`
-  margin-vertical: 5px;
-  padding-horizontal: 60px;
-  align-items: 'center';
+  margin-vertical: 10px;
+  align-items: center;
 `;
-export const ProgressText = styled.Text`
-  margin-top: 15px;
-  font-size: 16px;
+export const FitnessnDietView = styled.View`
+  margin-vertical: 30px;
+`;
+export const DateTextView = styled.View`
+  margin-vertical: 20px;
+  align-items: center;
+`;
+export const DateText = styled.Text`
+  margin-bottom: 10px;
+  font-size: 20px;
   font-family: 'Helvetica';
   font-weight: bold;
 `;
@@ -227,8 +232,8 @@ export const WeeksText = styled.Text`
   margin-vertical: 10px;
 `;
 export const ExerciseSwitch = styled.Switch`
-  transform: scale(0.85);
-  margin-left: 220px;
+  transform: scale(0.8);
+  margin-left: ${Dimensions.get('screen').width - 120}px;
   position: absolute;
 `;
 export const ExerciseText = styled.Text`
@@ -237,15 +242,72 @@ export const ExerciseText = styled.Text`
   font-size: 18px;
   margin-vertical: 5px;
 `;
+
 export const ExerciseView = styled.View`
   flex: 1;
   flex-direction: row;
-  align-items: 'center';
+`;
+// styling on DietPage
+// styling for date and recommended calories intake info
+export const DietView1 = styled.View`
+  padding: 10px;
+  align-items: center;
+  border-width: 2px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-color: ${black};
+`;
+
+export const DietView2 = styled.View`
+  padding: 20px;
+  flex-direction: row;
+  border-width: 2px;
+  margin-bottom: 25px;
+  border-top-width: 0px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-color: ${black};
+`;
+
+export const DietIconView = styled.View`
+  padding-hotizontal: 5px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DietTextView = styled.View`
+  align-items: center;
+  padding: 5px 15px 5px 10px;
+`;
+export const DietText = styled.Text`
+  font-size: 18px;
+  font-family: 'Helvetica';
+  font-weight: bold;
+`;
+// styling for Meal Lists
+export const MealView = styled.View`
+  padding: 20px;
+  flex-direction: row;
+`;
+
+export const MealTextView = styled.View`
+  margin-horizontal: 25px;
+`;
+
+export const MealTitle = styled.Text`
+  font-size: 19px;
+  font-weight: bold;
+  font-family: 'Helvetica';
+`;
+
+export const MealText = styled.Text`
+  font-size: 16px;
+  font-family: 'Helvetica';
 `;
 
 // styling in main page
 export const UserinfoView = styled.View`
-  align-items: 'center';
+  align-items: center;
 `;
 export const DataView = styled.View`
   width: 100%;
@@ -253,9 +315,30 @@ export const DataView = styled.View`
   padding: 20px;
   margin-vertical: 10px;
   border-radius: 10px;
+  flex-direction: row;
+`;
+export const DataTitleText = styled.Text`
+  font-size: 22px;
+  margin-left: 10px;
+  font-family: 'Georgia';
 `;
 export const DataText = styled.Text`
   font-size: 20px;
   margin-left: 10px;
   font-family: 'Georgia';
+  font-weight: bold;
+  color: ${tertiary};
+`;
+
+export const ExerciseDoneText = styled.Text`
+  color: ${grey};
+  font-family: 'Georgia';
+  font-size: 18px;
+  margin-vertical: 5px;
+`;
+
+export const ProfilePicture = styled.Image`
+  width: 150px;
+  height: 150px;
+  margin-top: 0px;
 `;

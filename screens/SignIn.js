@@ -36,17 +36,6 @@ const SignIn = () => {
 
   // Performs Sign In in Supabase
   async function doSignIn(email, password) {
-    /*
-      const { user, session, error } = await signIn(email, password);
-      if (error) {
-        Alert.alert("Error Signing Up", error.message, [
-          { text: "OK", onPress: () => null },
-        ]);
-      console.log(error);
-      } else {
-        navigation.navigate("Tabs");
-      }
-      */
     try {
       setLoading(true);
       const { user, session, error } = await signIn(email, password);
@@ -64,15 +53,7 @@ const SignIn = () => {
     }
   }
 
-  async function selectTable() {
-    console.log('test');
-
-    /*
-      const { data, error } = await supabase
-      .from('profiles')
-      .select()
-      console.log(data);
-      */
+  async function bypassSignin() {
     navigation.navigate('Tabs');
   }
 
@@ -115,7 +96,8 @@ const SignIn = () => {
               <StyledButton onPress={handleSubmit}>
                 <ButtonText>Sign In</ButtonText>
               </StyledButton>
-              <StyledButton onPress={selectTable}>
+
+              <StyledButton onPress={bypassSignin}>
                 <ButtonText>Bypass Sign In</ButtonText>
               </StyledButton>
             </StyledFormArea>

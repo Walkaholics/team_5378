@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
@@ -43,40 +43,24 @@ const ReportPage = () => {
     //console.log(isMale);
   }
 
-  // Calculate BMR
-  async function handleBMR() {
+  // Get BMR, BMI & BFP from supabase
+  async function handleReportData() {
     const data = await getHealthData();
-    let bmr = 0;
-    if (data.Gender == 'male') {
-      console.log('you are male');
-      // Formula: 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years)
-      bmr =
-        88.362 + 13.397 * data.Weight + 4.799 * data.Height - 5.677 * data.Age;
-    } else if (data.Gender == 'female') {
-      bmr =
-        447.593 + 9.247 * data.Weight + 3.098 * data.Height - 4.33 * data.Age;
-    } else {
-      bmr = 0;
-    }
-    //console.log(bmr);
-    setBMR(Math.round(bmr, 1));
-  }
-  handleBMR();
-
-  // Calculate BMI & set BFP
-  async function handleBMI() {
-    const data = await getHealthData();
-    //console.log("went through")
-    let weight = data.Weight;
-    let height = data.Height;
-    let bmi = (weight / ((height * height) / 10000)).toFixed(2);
-    //console.log(bmi);
-    setBMI(bmi);
+    setBMR(data.BMR);
+    setBMI(data.BMI);
     setBFP(data.BFP);
   }
-  handleBMI();
-  //console.log(calculateBMI().then(response => {response}))
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      handleReportData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  // Get Supabase session data
   async function getSessionData() {
     const session = supabase.auth.session();
     console.log(session);
@@ -199,12 +183,14 @@ const ReportPage = () => {
             source={require('./../assets/img/TDEE.png')}
           />
         </DataViewR2>
+        {/*
         <Button color="red" onPress={() => getHealthData()}>
           Health Data
         </Button>
         <Button color="red" onPress={() => getSessionData()}>
           get data
         </Button>
+        */}
       </ScrollContainer>
     </StyledContainer>
   );

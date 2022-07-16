@@ -134,10 +134,11 @@ const SignUp = () => {
               <StyledButton onPress={handleSubmit}>
                 <ButtonText>Sign Up</ButtonText>
               </StyledButton>
-
+              {/*
               <StyledButton onPress={() => navigation.navigate('Tabs')}>
                 <ButtonText>Bypass Sign Up</ButtonText>
               </StyledButton>
+              */}
             </StyledFormArea>
           )}
         </Formik>
