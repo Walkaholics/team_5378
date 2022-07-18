@@ -40,7 +40,7 @@ const SignIn = () => {
       setLoading(true);
       const { user, session, error } = await signIn(email, password);
       if (error) {
-        Alert.alert('Error Signing Up', error.message, [
+        Alert.alert('Error Signing In', error.message, [
           { text: 'OK', onPress: () => null },
         ]);
         console.log(error);

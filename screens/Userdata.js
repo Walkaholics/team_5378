@@ -87,8 +87,7 @@ const UserData = () => {
     if (gender == 'male') {
       //console.log("you are male");
       // Formula: 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years)
-      bmr = 88.362;
-      13.397 * weight + 4.799 * height - 5.677 * age;
+      bmr = 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age;
     } else {
       bmr = 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age;
     }
@@ -125,7 +124,7 @@ const UserData = () => {
 
   useEffect(() => {
     handleBMRnBMI(value1, value2, value3, value4);
-  }, []);
+  }, [value1, value2, value3, value4]);
 
   return (
     <StyledContainer>

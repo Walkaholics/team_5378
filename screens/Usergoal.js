@@ -139,6 +139,7 @@ const UserGoal = () => {
           Lunch:
             'Whole wheat pasta, chicken breast and a cup of mixed vegetables',
           Dinner: 'Steak, brown rice, and grilled broccoli',
+          Snack: 'Apple and Handful of Cashews',
         },
 
         {
@@ -147,6 +148,7 @@ const UserGoal = () => {
           Breakfast: 'Whole wheat bread, egg whites, and milk',
           Lunch: 'Cobb salad',
           Dinner: 'Shrimp fried quinoa with vegetables',
+          Snack: 'Orange and greek yugurt',
         },
         {
           id: supabase.auth.user().id,
@@ -154,6 +156,7 @@ const UserGoal = () => {
           Breakfast: 'Frozen mixed berries, whole milk, and rolled oats',
           Lunch: 'Chicken breast, fried mixed vegetables, and egg noodles',
           Dinner: 'Whole grain salmon burger with lettuce',
+          Snack: 'Apple and protein smoothie',
         },
 
         {
@@ -163,6 +166,7 @@ const UserGoal = () => {
             'Boiled eggs, protein shake, cashews, and steamed sweet potatoes',
           Lunch: 'Hainanese chicken rice',
           Dinner: 'Sesame zoodles With crispy tofu',
+          Snack: 'Cherry tomatoes and protein bars',
         },
         {
           id: supabase.auth.user().id,
@@ -171,6 +175,7 @@ const UserGoal = () => {
           Lunch:
             'Steak, grilled potatoes, and boiled vegetables with soy sauce',
           Dinner: 'Turkey lettuce wraps',
+          Snack: 'Apple and handful of Cashews',
         },
         {
           id: supabase.auth.user().id,
@@ -178,6 +183,7 @@ const UserGoal = () => {
           Breakfast: 'Chocolate protein pancakes with fried eggs',
           Lunch: 'Steak and bean burrito bowl',
           Dinner: 'Soba noodles with boiled chicken breast and cucumber',
+          Snack: 'Orange and beef jerky',
         },
         {
           id: supabase.auth.user().id,
@@ -186,6 +192,7 @@ const UserGoal = () => {
           Lunch:
             'Sushi rolles with high protein(California Roll, Sashimi, etc)',
           Dinner: 'Sweet potato chicken bowl',
+          Snack: 'Avocado toast with greek yogurt',
         },
       ]);
     } else if (usergoal == 'become-healthier') {
@@ -240,6 +247,7 @@ const UserGoal = () => {
           Breakfast: 'Oatmeal, scrambled eggs, and fruit',
           Lunch: 'Roasted chicken wrap',
           Dinner: 'Fresh garden salad with beef ham',
+          Snack: 'No-salt added almonds',
         },
 
         {
@@ -249,6 +257,7 @@ const UserGoal = () => {
             'Banana and sugar-free yogurt blend with cocoa powder, and 1 boiled egg',
           Lunch: 'Beef Noodle Soup',
           Dinner: 'Turkey Burger Wraps',
+          Snack: 'No-sugar added yogurt',
         },
 
         {
@@ -258,6 +267,7 @@ const UserGoal = () => {
           Breakfast: 'Spinach Loaded, omelette, and tea',
           Lunch: 'Avocado pasta',
           Dinner: 'Vietnamese rice paper rolls',
+          Snack: 'Whole fruits',
         },
         {
           id: supabase.auth.user().id,
@@ -266,6 +276,7 @@ const UserGoal = () => {
           Breakfast: 'Overnight oats and fried eggs without oil',
           Lunch: 'Soba noodle salad with chicken',
           Dinner: 'Baked salmon and caprese zoodles',
+          Snack: 'Yogurt with fruits',
         },
         {
           id: supabase.auth.user().id,
@@ -274,6 +285,7 @@ const UserGoal = () => {
           Breakfast: 'Sugar-free latte with egg sandwich',
           Lunch: 'Chicken Caesar Salad',
           Dinner: 'Cabbage burritos',
+          Snack: 'Whole fruits',
         },
 
         {
@@ -283,6 +295,7 @@ const UserGoal = () => {
           Breakfast: 'Healthy eggs benedict',
           Lunch: 'Non-spicy Chinese hot pot with low fat/sugar dipping sauces',
           Dinner: 'Garlicky lemon mahi mahi',
+          Snack: 'No-salt added walnuts',
         },
 
         {
@@ -292,6 +305,7 @@ const UserGoal = () => {
           Breakfast: 'Vietnamese beef pho',
           Lunch: 'Rainbow roll with seaweed salad',
           Dinner: 'Turkey meatball pad thai',
+          Snack: 'Baked rice cakes and fruits',
         },
       ]);
     } else if (usergoal == 'lose-weight') {
@@ -364,6 +378,7 @@ const UserGoal = () => {
           Breakfast: 'Boiled egg, whole wheat bread, 0 fat milk',
           Lunch: 'Vegetable salad with healthy salad dressing, grilled chicken',
           Dinner: 'Salmon salad with cannellini beans',
+          Snack: 'Grapefruit and sugar-free yogurt',
         },
         {
           id: supabase.auth.user().id,
@@ -371,6 +386,7 @@ const UserGoal = () => {
           Breakfast: 'Whole grain toast, fried eggs, and sugar-free yogurt',
           Lunch: 'Chicken caesar salad on a spinach wrap',
           Dinner: 'Grilled fish tacos topped with cabbage-cilantro slaw',
+          Snack: 'Cherry tomatoes',
         },
 
         {
@@ -379,6 +395,7 @@ const UserGoal = () => {
           Breakfast: 'Oatmeal with milk, boiled eggs',
           Lunch: 'Boiled corn, grilled beef tenderloin and broccoli',
           Dinner: 'Shirataki noodle with cucumber and shrimp',
+          Snack: 'Cucumber',
         },
 
         {
@@ -388,6 +405,7 @@ const UserGoal = () => {
           Breakfast: 'Boiled egg, whole wheat bread, 0 fat milk',
           Lunch: 'Mediterranean chickpea quinoa bowl',
           Dinner: 'Vegetable udon soup with tofu',
+          Snack: 'Grapefruit and sugar-free yogurt',
         },
 
         {
@@ -397,6 +415,7 @@ const UserGoal = () => {
           Lunch:
             'Mixed grain rice with fried Chinese cabbage and boiled chicken slices',
           Dinner: 'Spicy tofu tacos',
+          Snack: 'Cherry tomatoes',
         },
 
         {
@@ -405,6 +424,7 @@ const UserGoal = () => {
           Breakfast: 'Whole grain toast, fried eggs, and sugar-free yogurt',
           Lunch: 'Tuna rolls with cucumber',
           Dinner: 'Boiled vegetables and shrimp',
+          Snack: 'Apple and 0 fat milk',
         },
         {
           id: supabase.auth.user().id,
@@ -412,6 +432,7 @@ const UserGoal = () => {
           Breakfast: 'Boiled egg, whole wheat bread, 0 fat milk',
           Lunch: 'Grilled potatoes, veges, and fish',
           Dinner: 'Whole wheat low-fat tuna sandwhich',
+          Snack: 'Cherry tomatoes',
         },
       ]);
     }

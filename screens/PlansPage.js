@@ -123,6 +123,7 @@ const PlansPage = () => {
 
   // Updates when plan state is updated
   useEffect(() => {
+    getPlan();
     getProgress();
   }, [plan]);
 
@@ -140,24 +141,7 @@ const PlansPage = () => {
     } else {
       setProgress(0);
     }
-    console.log('progress ' + progress);
-  }
-
-  // Convert to day names
-  function dayStringConverter(i) {
-    if (i == 2) {
-      return 'Tuesday';
-    } else if (i == 3) {
-      return 'Wednesday';
-    } else if (i == 4) {
-      return 'Thursday';
-    } else if (i == 5) {
-      return 'Friday';
-    } else if (i == 6) {
-      return 'Saturday';
-    } else if (i == 7) {
-      return 'Sunday';
-    }
+    //console.log('progress ' + progress);
   }
 
   function progressValue(i) {
