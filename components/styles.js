@@ -169,7 +169,7 @@ export const TextLinkContent = styled.Text`
 // clickable left arrow to exit to previous page
 export const ExitIcon = styled.TouchableOpacity`
   align-items: center;
-  right: 335px;
+  right: ${Dimensions.get('screen').width - 50}px;
   top: 20px;
   position: absolute;
   z-index: 1;
@@ -193,6 +193,16 @@ export const DataViewR1 = styled.View`
 export const DataViewR2 = styled.View`
   margin-vertical: 50px;
 `;
+export const DataViewR3 = styled.View`
+  margin-vertical: 10px;
+  margin-horizontal: 30px;
+`;
+export const DataViewR4 = styled.View`
+  height: 450px;
+  margin-top: 10px;
+  align-items: center;
+  margin-horizontal: 30px;
+`;
 export const DataTextR = styled.Text`
   font-family: 'Georgia';
   font-size: 20px;
@@ -202,7 +212,6 @@ export const BMRImage = styled.Image`
   height: ${Dimensions.get('screen').width - 65}px;
   width: ${Dimensions.get('screen').width - 65}px;
 `;
-
 // styling in PlansPage
 export const PlanspageView = styled.View`
   margin-vertical: 10px;
@@ -270,13 +279,15 @@ export const DietView2 = styled.View`
 `;
 
 export const DietIconView = styled.View`
-  padding-hotizontal: 5px;
+  padding-hotizontal: 20px;
+  margin-right: 10px;
   align-items: center;
   justify-content: center;
 `;
 
 export const DietTextView = styled.View`
   align-items: center;
+  width: ${Dimensions.get('screen').width / 2 + 20}px;
   padding: 5px 15px 5px 10px;
 `;
 export const DietText = styled.Text`
@@ -341,4 +352,15 @@ export const ProfilePicture = styled.Image`
   width: 150px;
   height: 150px;
   margin-top: 0px;
+  border-width: 0.1px;
+  border-color: ${secondary};
+  border-radius: 200px;
+`;
+
+export const ProfilePicture2 = styled.Image`
+  width: 140px;
+  height: 140px;
+  margin-top: 0px;
+  border-width: 2px;
+  border-color: ${secondary};
 `;

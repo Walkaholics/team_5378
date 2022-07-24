@@ -15,6 +15,8 @@ import PlansPage from './screens/PlansPage';
 import DietPage from './screens/DietPage';
 import ExercisePage from './screens/ExercisePage';
 import EditProfile from './screens/EditProfile';
+import CameraPage from './screens/CameraPage';
+import TDEECalculator from './screens/TDEECalculator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Octicons, Ionicons } from '@expo/vector-icons';
@@ -87,8 +89,8 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="ReportPage"
-          component={ReportPage}
+          name="ReportNavigator"
+          component={ReportNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="stats-chart-outline" color={color} size={size} />
@@ -105,8 +107,8 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="Settings"
-          component={ProfileNavigator}
+          name="SettingsNavigator"
+          component={SettingsNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="cog-outline" color={color} size={size} />
@@ -117,7 +119,18 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-
+// For additional tabs in Report Page
+const ReportNavigator = () => {
+  return (
+    //<Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Group>
+        <Stack.Screen name="ReportPage" component={ReportPage} />
+        <Stack.Screen name="TDEECalculator" component={TDEECalculator} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+};
 // For additional tabs in Plans Page
 const PlansNavigator = () => {
   return (
@@ -144,8 +157,8 @@ const ProfileNavigator = () => {
     <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
       <ProfileStack.Group>
         <ProfileStack.Screen
-          name="SettingsPage"
-          component={SettingsPage}
+          name="MainPage"
+          component={MainPage}
           options={{
             title: '',
             headerRight: () => (
@@ -155,13 +168,21 @@ const ProfileNavigator = () => {
             ),
           }}
         />
-        <ProfileStack.Screen name="EditProfile" component={EditProfile} />
-        {/*
-                <ProfileStack.Screen name="SettingsPage" component={SettingsPage} />              
-                <ProfileStack.Screen name="ReportPage" component={ReportPage} />
-                */}
       </ProfileStack.Group>
     </ProfileStack.Navigator>
+  );
+};
+
+const SettingsNavigator = () => {
+  return (
+    //<Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Group>
+        <Stack.Screen name="SettingsPage" component={SettingsPage} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="CameraPage" component={CameraPage} />
+      </Stack.Group>
+    </Stack.Navigator>
   );
 };
 

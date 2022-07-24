@@ -2,19 +2,19 @@ import { React, useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
-import { signOut, supabase } from '../supabaseClient';
+import { supabase } from '../supabaseClient';
 
 import RNSpeedometer from 'react-native-speedometer';
 import {
   StyledContainer,
-  InnerContainer,
   ScrollContainer,
   PageTitle2,
-  SubTitleView,
   DataViewR1,
   DataViewR2,
   DataTextR,
   BMRImage,
+  StyledButton,
+  ButtonText,
 } from '../components/styles';
 
 const ReportPage = () => {
@@ -183,6 +183,15 @@ const ReportPage = () => {
             source={require('./../assets/img/TDEE.png')}
           />
         </DataViewR2>
+
+        <DataTextR>
+          Calculate Your TDEE (Total Daily Energy Expenditure) Based On BMR and
+          Activity Rate{' '}
+        </DataTextR>
+        <StyledButton onPress={() => navigation.navigate('TDEECalculator')}>
+          <ButtonText>TDEE Calculator</ButtonText>
+        </StyledButton>
+
         {/*
         <Button color="red" onPress={() => getHealthData()}>
           Health Data

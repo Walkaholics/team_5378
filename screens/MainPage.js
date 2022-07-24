@@ -15,6 +15,7 @@ import {
   StyledButton,
   ButtonText,
   DataTitleText,
+  ProfilePicture,
 } from '../components/styles';
 
 // import icons
@@ -34,6 +35,7 @@ const MainPage = () => {
   const [sleepTime, setSleepTime] = useState('');
   const [GOAL, setGOAL] = useState('');
   const [healthData, setHealthData] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   // Get User Input Data
   async function getHealthData() {
@@ -58,6 +60,7 @@ const MainPage = () => {
     setBFP(data.BFP);
     setSleepTime(data.Sleep);
     setGOAL(data.Goal);
+    setAvatarUrl(data.avatar_url);
   }
   // Render once only
   /*
@@ -79,6 +82,26 @@ const MainPage = () => {
     <StyledContainer>
       <ScrollContainer>
         <PageTitle2>WELCOME!😊</PageTitle2>
+        {avatarUrl ? (
+          <UserinfoView>
+            <ProfilePicture
+              resizeMode="cover"
+              //source={{ uri: `https://xpiordhecqmaqsczvzgs.supabase.co/storage/v1/object/sign/${avatarUrl}${`?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL0JDREVDNTFGLUFEQkMtNEMyNi05NENFLTk3MzYyNzNGMTUxRC5qcGciLCJpYXQiOjE2NTgzODUzNjMsImV4cCI6MTk3Mzc0NTM2M30.tIzpVgT_ttoMRa2RPgfraH-1y4mS8AIRS8fxcZBUxyk&t=2022-07-21T06%3A36%3A03.463Z`}`}}
+              source={{
+                uri: `https://xpiordhecqmaqsczvzgs.supabase.co/storage/v1/object/public/${avatarUrl}`,
+              }}
+              //style={{width: 400, height: 400}}
+            />
+          </UserinfoView>
+        ) : (
+          <UserinfoView>
+            <ProfilePicture
+              resizeMode="cover"
+              source={require('./../assets/img/adaptive-icon.png')}
+            />
+          </UserinfoView>
+        )}
+
         <UserinfoView>
           <DataView>
             <DataTitleText>Age:</DataTitleText>
