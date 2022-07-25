@@ -28,11 +28,11 @@ const signIn = async (email, password) => {
 };
 
 const signOut = async (email, password) => {
-  const { error } = await supabase.auth.signOut({
+  const { user, error } = await supabase.auth.signOut({
     email,
     password,
   });
-  return { error };
+  return user ? null : { error };
 };
 
 const getUser = async () => {

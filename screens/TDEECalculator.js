@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Alert, FlatList } from 'react-native';
+import { Alert, View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SimpleSelectButton from 'react-native-simple-select-button';
 import { supabase } from '../supabaseClient';
@@ -13,8 +13,9 @@ import {
   DataViewR4,
   DataTextR,
   BMRImage,
-  ExitIcon,
+  ExitIcon1,
   Colors,
+  DataViewR5,
 } from '../components/styles';
 
 // import icon
@@ -77,13 +78,21 @@ const TDEECalculator = () => {
   const ListFooter = () => {
     //View to set in Footer
     return (
-      <DataViewR4>
-        <DataTextR>Your TDEE: {choice * BMR}</DataTextR>
-        <DataTextR>
-          ☑️ Eat every day according to TDEE rather than BMR would be more
-          efficient for you to accomplish fitness goal!
-        </DataTextR>
-      </DataViewR4>
+      <View>
+        <DataViewR4>
+          <DataTextR>Your TDEE: {choice * BMR}</DataTextR>
+        </DataViewR4>
+        <DataViewR5>
+          <DataTextR>
+            ☑️ On Diet Page the suggested calories intake is for moderately
+            active activity rate
+          </DataTextR>
+          <DataTextR>
+            ☑️ Eat every day according to TDEE would be more efficient for you
+            to accomplish fitness goal!
+          </DataTextR>
+        </DataViewR5>
+      </View>
     );
   };
 
@@ -91,14 +100,14 @@ const TDEECalculator = () => {
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <ExitIcon>
+        <ExitIcon1>
           <Octicons
             onPress={() => navigation.navigate('ReportPage')}
             name={'arrow-left'}
             size={30}
             color={black}
           />
-        </ExitIcon>
+        </ExitIcon1>
         <PageTitle2>Choose Your Activity Rate</PageTitle2>
         <FlatList
           ListHeaderComponent={ListHeader}

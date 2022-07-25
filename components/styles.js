@@ -167,9 +167,16 @@ export const TextLinkContent = styled.Text`
 `;
 
 // clickable left arrow to exit to previous page
-export const ExitIcon = styled.TouchableOpacity`
-  align-items: center;
+export const ExitIcon1 = styled.TouchableOpacity`
   right: ${Dimensions.get('screen').width - 50}px;
+  top: 20px;
+  position: absolute;
+  z-index: 1;
+`;
+
+// different styling for exiticon in pages with scrollview
+export const ExitIcon2 = styled.TouchableOpacity`
+  align-items: left;
   top: 20px;
   position: absolute;
   z-index: 1;
@@ -198,10 +205,14 @@ export const DataViewR3 = styled.View`
   margin-horizontal: 30px;
 `;
 export const DataViewR4 = styled.View`
+  align-items: center;
+  margin-top: 10px;
+`;
+export const DataViewR5 = styled.View`
   height: 450px;
   margin-top: 10px;
-  align-items: center;
   margin-horizontal: 30px;
+  padding-horizontal: 25px;
 `;
 export const DataTextR = styled.Text`
   font-family: 'Georgia';
@@ -294,6 +305,7 @@ export const DietText = styled.Text`
   font-size: 18px;
   font-family: 'Helvetica';
   font-weight: bold;
+  font-style: italic;
 `;
 // styling for Meal Lists
 export const MealView = styled.View`
@@ -306,8 +318,9 @@ export const MealTextView = styled.View`
 `;
 
 export const MealTitle = styled.Text`
-  font-size: 19px;
+  font-size: 20px;
   font-weight: bold;
+
   font-family: 'Helvetica';
 `;
 
@@ -316,6 +329,22 @@ export const MealText = styled.Text`
   font-family: 'Helvetica';
 `;
 
+export const TipsView = styled.View`
+  margin: 35px 15px 25px 15px;
+`;
+export const TipsText = styled.Text`
+  font-size: 18px;
+  font-family: 'Georgia';
+`;
+export const TipsContentView = styled.View`
+  margin-vertical: 10px;
+  align-items: center;
+  padding: 10px;
+`;
+export const TipsImage = styled.Image`
+  height: ${Dimensions.get('screen').width - 100}px;
+  width: ${Dimensions.get('screen').width - 100}px;
+`;
 // styling in main page
 export const UserinfoView = styled.View`
   align-items: center;

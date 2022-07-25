@@ -18,7 +18,7 @@ import {
   LeftIcon2,
   ButtonText,
   Colors,
-  ExitIcon,
+  ExitIcon1,
 } from '../components/styles';
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
@@ -130,9 +130,9 @@ const UserData = () => {
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <ExitIcon onPress={() => navigation.navigate('SignUp')}>
+        <ExitIcon1 onPress={() => navigation.navigate('SignUp')}>
           <Octicons name={'arrow-left'} size={30} color={black} />
-        </ExitIcon>
+        </ExitIcon1>
         <PageTitle2>Tell Us About Yourself</PageTitle2>
 
         <StyledFormArea>

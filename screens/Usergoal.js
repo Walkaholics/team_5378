@@ -20,7 +20,7 @@ import {
   DisabledButton,
   ButtonText,
   Colors,
-  ExitIcon,
+  ExitIcon1,
 } from '../components/styles';
 // import icons
 import { Octicons, Ionicons } from '@expo/vector-icons';
@@ -442,14 +442,14 @@ const UserGoal = () => {
     <StyledContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <ExitIcon>
+        <ExitIcon1>
           <Octicons
             onPress={() => navigation.navigate('UserData')}
             name={'arrow-left'}
             size={30}
             color={black}
           />
-        </ExitIcon>
+        </ExitIcon1>
         <PageTitle2>What is Your Goal?</PageTitle2>
         <View
           style={{

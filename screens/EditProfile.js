@@ -26,7 +26,6 @@ import {
   LeftIcon2,
   ButtonText,
   Colors,
-  ExitIcon,
   ProfilePicture,
   ProfilePicture2,
 } from '../components/styles';

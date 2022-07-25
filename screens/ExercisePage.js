@@ -6,8 +6,8 @@ import { supabase } from '../supabaseClient';
 
 import {
   StyledContainer,
-  InnerContainer,
   ScrollContainer,
+  ExitIcon2,
   PageTitle2,
   PlanspageView,
   SubTitleView,
@@ -17,8 +17,6 @@ import {
   ExerciseView,
   ExerciseText,
   Colors,
-  StyledButton,
-  ButtonText,
   ExerciseDoneText,
 } from '../components/styles';
 // Progress Bar
@@ -28,6 +26,8 @@ import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { set } from 'react-native-reanimated';
 import { getDrawerStatusFromState } from '@react-navigation/drawer';
 
+// Icons
+import { Octicons } from '@expo/vector-icons';
 // Colors
 const { primary, secondary, grey, black } = Colors;
 
@@ -217,6 +217,14 @@ const ExercisePage = () => {
   return (
     <StyledContainer>
       <ScrollContainer>
+        <ExitIcon2>
+          <Octicons
+            onPress={() => navigation.navigate('PlansPage')}
+            name={'arrow-left'}
+            size={30}
+            color={black}
+          />
+        </ExitIcon2>
         <PageTitle2>Your Weekly Fitness Plan</PageTitle2>
         <PlanspageView>
           <CircularProgress
@@ -338,20 +346,6 @@ const ExercisePage = () => {
             }
           })}
         </View>
-        {/*
-        <Button color="red" onPress={() => getHealthData()}>
-          Health Data
-        </Button>
-        <Button color="red" onPress={() => getPlan()}>
-          get plan
-        </Button>
-        <Button color="red" onPress={() => getProgress()}>
-          get progress
-        </Button>
-        */}
-        <StyledButton onPress={() => navigation.navigate('PlansPage')}>
-          <ButtonText>Back</ButtonText>
-        </StyledButton>
       </ScrollContainer>
     </StyledContainer>
   );

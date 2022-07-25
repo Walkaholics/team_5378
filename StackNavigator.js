@@ -57,6 +57,8 @@ const StackNavigator = () => {
         <Stack.Screen name="UserData" component={UserData} />
         <Stack.Screen name="UserGoal" component={UserGoal} />
         <Stack.Screen name="Tabs" component={TabNavigator} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="CameraPage" component={CameraPage} />
         {/*
                 <Stack.Screen name="MainPage" component={MainPage} />
                 <Stack.Screen name="SettingsPage" component={SettingsPage} />              
@@ -107,8 +109,8 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="SettingsNavigator"
-          component={SettingsNavigator}
+          name="SettingsPage"
+          component={SettingsPage}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="cog-outline" color={color} size={size} />
@@ -145,42 +147,6 @@ const PlansNavigator = () => {
                 <Stack.Screen name="SettingsPage" component={SettingsPage} />              
                 <Stack.Screen name="ReportPage" component={ReportPage} />
                 */}
-      </Stack.Group>
-    </Stack.Navigator>
-  );
-};
-
-const ProfileNavigator = () => {
-  const navigation = useNavigation();
-  return (
-    //<Stack.Navigator>
-    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
-      <ProfileStack.Group>
-        <ProfileStack.Screen
-          name="MainPage"
-          component={MainPage}
-          options={{
-            title: '',
-            headerRight: () => (
-              <StyledButton onPress={() => navigation.navigate('EditProfile')}>
-                <Octicons name={'arrow-left'} size={30} color={black} />
-              </StyledButton>
-            ),
-          }}
-        />
-      </ProfileStack.Group>
-    </ProfileStack.Navigator>
-  );
-};
-
-const SettingsNavigator = () => {
-  return (
-    //<Stack.Navigator>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Group>
-        <Stack.Screen name="SettingsPage" component={SettingsPage} />
-        <Stack.Screen name="EditProfile" component={EditProfile} />
-        <Stack.Screen name="CameraPage" component={CameraPage} />
       </Stack.Group>
     </Stack.Navigator>
   );

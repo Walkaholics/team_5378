@@ -6,8 +6,8 @@ import { supabase } from '../supabaseClient';
 
 import {
   StyledContainer,
-  InnerContainer,
   ScrollContainer,
+  ExitIcon2,
   PageTitle2,
   PlanspageView,
   SubTitleView,
@@ -16,9 +16,6 @@ import {
   ExerciseSwitch,
   ExerciseView,
   ExerciseText,
-  Colors,
-  StyledButton,
-  ButtonText,
   DietView1,
   DietView2,
   DietText,
@@ -28,6 +25,11 @@ import {
   MealTextView,
   MealTitle,
   MealText,
+  TipsContentView,
+  TipsView,
+  Colors,
+  TipsText,
+  TipsImage,
 } from '../components/styles';
 // Progress Bar
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -35,10 +37,10 @@ import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { or, set } from 'react-native-reanimated';
 
 // import icons
-import { Ionicons } from '@expo/vector-icons';
+import { Octicons, Ionicons } from '@expo/vector-icons';
 
 // Colors
-const { primary, secondary, tertiary, grey } = Colors;
+const { black, primary, secondary, tertiary, grey } = Colors;
 
 const DietPage = () => {
   const navigation = useNavigation();
@@ -122,13 +124,23 @@ const DietPage = () => {
   return (
     <StyledContainer>
       <ScrollContainer>
+        <ExitIcon2>
+          <Octicons
+            onPress={() => navigation.navigate('PlansPage')}
+            name={'arrow-left'}
+            size={30}
+            color={black}
+          />
+        </ExitIcon2>
         <PageTitle2>Your Weekly Diet Plan</PageTitle2>
         <DietView1>
           <DietText>{fullDate}</DietText>
         </DietView1>
         <DietView2>
           <DietTextView>
-            <DietText>Recommended Calories Intake: {BMR}</DietText>
+            <DietText>
+              Recommended Calories Intake: {Math.round(BMR * 1.375)}
+            </DietText>
           </DietTextView>
           <DietIconView>
             <Ionicons name={'flame-outline'} size={50} color={tertiary} />
@@ -194,22 +206,55 @@ const DietPage = () => {
                 </View>
               );
           })}
+          <TipsView>
+            <MealTitle>Diet Tips:</MealTitle>
+            <MealTitle>High-protein Food Choices</MealTitle>
+            <MealText>
+              Feel free to substitute if you don't like the one in the diet
+              plan!
+            </MealText>
+            <TipsContentView>
+              <TipsImage
+                resizeMode="cover"
+                source={require('./../assets/img/chicken-breast.jpeg')}
+              />
+              <TipsText>Chicken Breast</TipsText>
+              <TipsText>24.6g protein/100g chicken breast</TipsText>
+            </TipsContentView>
+            <TipsContentView>
+              <TipsImage
+                resizeMode="cover"
+                source={require('./../assets/img/pork-chops.jpeg')}
+              />
+              <TipsText>Pork Chops</TipsText>
+              <TipsText>19.6g protein/100g pork chops</TipsText>
+            </TipsContentView>
+            <TipsContentView>
+              <TipsImage
+                resizeMode="cover"
+                source={require('./../assets/img/tuna.jpeg')}
+              />
+              <TipsText>Tuna</TipsText>
+              <TipsText>17.2g protein/100g tuna</TipsText>
+            </TipsContentView>
+            <TipsContentView>
+              <TipsImage
+                resizeMode="cover"
+                source={require('./../assets/img/beef.jpeg')}
+              />
+              <TipsText>Beef</TipsText>
+              <TipsText>21.3g protein/100g beef</TipsText>
+            </TipsContentView>
+            <TipsContentView>
+              <TipsImage
+                resizeMode="cover"
+                source={require('./../assets/img/tofu.jpeg')}
+              />
+              <TipsText>Firm Tofu</TipsText>
+              <TipsText>12.0g protein/100g firm tofu</TipsText>
+            </TipsContentView>
+          </TipsView>
         </View>
-
-        {/*
-        <Button color="red" onPress={() => getHealthData()}>
-          Health Data
-        </Button>
-        <Button color="red" onPress={() => getPlan()}>
-          get plan
-        </Button>
-        <Button color="red" onPress={() => getProgress()}>
-          get progress
-        </Button>
-        */}
-        <StyledButton onPress={() => navigation.navigate('PlansPage')}>
-          <ButtonText>Back</ButtonText>
-        </StyledButton>
       </ScrollContainer>
     </StyledContainer>
   );

@@ -201,7 +201,9 @@ const PlansPage = () => {
           </DietView1>
           <DietView2>
             <DietTextView>
-              <DietText>Recommended Calories Intake: {BMR}</DietText>
+              <DietText>
+                Recommended Calories Intake: {Math.round(BMR * 1.375)}
+              </DietText>
             </DietTextView>
             <DietIconView>
               <Ionicons name={'flame-outline'} size={50} color={tertiary} />
