@@ -201,8 +201,8 @@ Stack: React Native
 * Have Expo Go app installed on mobile phone - open camera on your phone and scan the QR code to open the project
 
 ## User Testing
-** For detailed User testing content of table, please see pdf version of README file at https://github.com/Walkaholics/team_5378/blob/MS3_master/Walkaholics_README.pdf **
-
+**For detailed User testing content of table, please see pdf version of README file at**
+https://github.com/Walkaholics/team_5378/blob/MS3_master/Walkaholics_README.pdf 
 
 
 
