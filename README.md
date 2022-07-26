@@ -189,7 +189,9 @@ Users can either choose to take a picture from their camera or photo library.  F
 This function would be carried out in Supabase every Monday at 12:00 am to refresh all user’s progress in their exercises to zero.
 ### Procedure to run Walkaholics locally
 Git: https://github.com/Walkaholics/team_5378
+
 Stack: React Native
+
 **Do not have Expo CLI installed - run npm install -g expo-cli**
 1. Change directory to this project
 2. Run npm install in the terminal
