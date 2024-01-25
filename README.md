@@ -4,7 +4,7 @@
 ## Team Name
 *Walkaholics*
 ## Team Member
-Shang Feiyang<br>Ho Jia We
+Feiyang<br>Jia We
 ## Date
 2022 May - 2022 August
 ## Proposed Level of Achievement
